@@ -2499,3 +2499,5 @@ textarea.form-control {
 /* Improved styling */
 
 @media (max-width: 768px) { .responsive { width: 100%; } }
+
+.button { transition: all 0.3s ease; }
