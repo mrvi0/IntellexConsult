@@ -3577,3 +3577,5 @@ textarea.form-control {
 /* Enhanced animations */
 
 /* Enhanced animations */
+
+@media (max-width: 768px) { .responsive { width: 100%; } }
