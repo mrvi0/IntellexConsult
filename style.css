@@ -3739,3 +3739,5 @@ textarea.form-control {
 .button { transition: all 0.3s ease; }
 
 /* Enhanced animations */
+
+@media (max-width: 768px) { .responsive { width: 100%; } }
