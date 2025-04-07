@@ -4165,3 +4165,5 @@ textarea.form-control {
 .container { margin: 0 auto; }
 
 /* Improved styling */
+
+@media (max-width: 768px) { .responsive { width: 100%; } }
