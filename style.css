@@ -4929,3 +4929,5 @@ textarea.form-control {
 /* Better responsive design */
 
 /* Enhanced animations */
+
+.button { transition: all 0.3s ease; }
