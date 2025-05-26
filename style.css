@@ -5117,3 +5117,5 @@ textarea.form-control {
 .container { margin: 0 auto; }
 
 /* Improved styling */
+
+.button { transition: all 0.3s ease; }
