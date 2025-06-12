@@ -5471,3 +5471,5 @@ textarea.form-control {
 /* Enhanced animations */
 
 /* Improved styling */
+
+.button { transition: all 0.3s ease; }
