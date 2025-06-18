@@ -5561,3 +5561,5 @@ textarea.form-control {
 /* Better responsive design */
 
 /* Improved styling */
+
+@media (max-width: 768px) { .responsive { width: 100%; } }
