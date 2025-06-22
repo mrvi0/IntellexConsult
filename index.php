@@ -81,59 +81,63 @@ get_header(); ?>
                 <p><?php echo get_theme_mod('services_subtitle', 'Полный спектр услуг в сфере банкротства и взыскания задолженности'); ?></p>
             </div>
             <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-money-bill-wave"></i>
+                <?php
+                $services_query = new WP_Query(array(
+                    'post_type' => 'service',
+                    'posts_per_page' => 6,
+                    'orderby' => 'menu_order',
+                    'order' => 'ASC'
+                ));
+
+                if ($services_query->have_posts()) :
+                    while ($services_query->have_posts()) : $services_query->the_post();
+                        $icon = get_post_meta(get_the_ID(), '_service_icon', true) ?: 'fas fa-briefcase';
+                        $link = get_post_meta(get_the_ID(), '_service_link', true);
+                ?>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="<?php echo esc_attr($icon); ?>"></i>
+                        </div>
+                        <h3><?php the_title(); ?></h3>
+                        <div class="entry-content">
+                            <?php the_content(); ?>
+                        </div>
+                        <?php if ($link) : ?>
+                            <a href="<?php echo esc_url($link); ?>" class="read-more">Подробнее</a>
+                        <?php endif; ?>
                     </div>
-                    <h3>Взыскание задолженности</h3>
-                    <p>Досудебное урегулирование, подготовка исковых заявлений, представление в суде, сопровождение исполнительных производств.</p>
-                    <a href="<?php echo get_permalink(get_page_by_path('vzyskanie-zadolzhennosti')); ?>" class="read-more">Подробнее</a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-chart-line"></i>
+                <?php
+                    endwhile;
+                    wp_reset_postdata();
+                else :
+                ?>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3>Взыскание задолженности</h3>
+                        <p>Досудебное урегулирование, подготовка исковых заявлений, представление в суде, сопровождение исполнительных производств.</p>
+                        <a href="<?php echo get_permalink(get_page_by_path('vzyskanie-zadolzhennosti')); ?>" class="read-more">Подробнее</a>
                     </div>
-                    <h3>Предбанкротный анализ</h3>
-                    <p>Комплексная оценка финансового состояния, анализ сделок, выявление рисков субсидиарной ответственности.</p>
-                    <a href="<?php echo get_permalink(get_page_by_path('predbankrotnyj-analiz')); ?>" class="read-more">Подробнее</a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-user"></i>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Предбанкротный анализ</h3>
+                        <p>Комплексная оценка финансового состояния, анализ сделок, выявление рисков субсидиарной ответственности.</p>
+                        <a href="<?php echo get_permalink(get_page_by_path('predbankrotnyj-analiz')); ?>" class="read-more">Подробнее</a>
                     </div>
-                    <h3>Банкротство физических лиц</h3>
-                    <p>Полное юридическое сопровождение процедуры банкротства граждан. Защита интересов и минимизация рисков.</p>
-                    <a href="<?php echo get_permalink(get_page_by_path('bankrotstvo-fizicheskih-lic')); ?>" class="read-more">Подробнее</a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-building"></i>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3>Банкротство физических лиц</h3>
+                        <p>Полное юридическое сопровождение процедуры банкротства граждан. Защита интересов и минимизация рисков.</p>
+                        <a href="<?php echo get_permalink(get_page_by_path('bankrotstvo-fizicheskih-lic')); ?>" class="read-more">Подробнее</a>
                     </div>
-                    <h3>Банкротство юридических лиц</h3>
-                    <p>Профессиональное банкротство компаний и ИП. Защита интересов кредиторов и должников в арбитражном суде.</p>
-                    <a href="<?php echo get_permalink(get_page_by_path('bankrotstvo-yuridicheskih-lic')); ?>" class="read-more">Подробнее</a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <h3>Субсидиарная ответственность</h3>
-                    <p>Сопровождение споров о привлечении к субсидиарной ответственности. Защита контролирующих лиц.</p>
-                    <a href="<?php echo get_permalink(get_page_by_path('subsidiarnaya-otvetstvennost')); ?>" class="read-more">Подробнее</a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Оспаривание сделок</h3>
-                    <p>Сопровождение споров о признании сделок должника недействительными. Защита интересов сторон.</p>
-                    <a href="<?php echo get_permalink(get_page_by_path('osparivanie-sdelok')); ?>" class="read-more">Подробнее</a>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>

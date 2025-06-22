@@ -657,22 +657,16 @@ function bankruptcy_law_pro_custom_post_types() {
     // Услуги
     register_post_type('service', array(
         'labels' => array(
-            'name' => 'Услуги',
-            'singular_name' => 'Услуга',
-            'add_new' => 'Добавить услугу',
-            'add_new_item' => 'Добавить новую услугу',
-            'edit_item' => 'Редактировать услугу',
-            'new_item' => 'Новая услуга',
-            'view_item' => 'Просмотреть услугу',
-            'search_items' => 'Искать услуги',
-            'not_found' => 'Услуги не найдены',
-            'not_found_in_trash' => 'В корзине нет услуг',
+            'name' => __('Услуги', 'bankruptcy-law-pro'),
+            'singular_name' => __('Услуга', 'bankruptcy-law-pro'),
+            'add_new_item' => __('Добавить новую услугу', 'bankruptcy-law-pro'),
+            'edit_item' => __('Редактировать услугу', 'bankruptcy-law-pro'),
         ),
         'public' => true,
+        'menu_icon' => 'dashicons-briefcase',
         'has_archive' => true,
-        'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
-        'menu_icon' => 'dashicons-admin-tools',
         'rewrite' => array('slug' => 'services'),
+        'supports' => array('title', 'editor', 'thumbnail'),
     ));
 
     // FAQ
@@ -812,6 +806,55 @@ function bankruptcy_law_pro_save_testimonial_meta($post_id) {
     }
 }
 add_action('save_post', 'bankruptcy_law_pro_save_testimonial_meta');
+
+/**
+ * Добавление метабоксов для команды
+ */
+function bankruptcy_law_pro_add_service_meta_boxes() {
+    add_meta_box(
+        'service_details',
+        __('Детали услуги', 'bankruptcy-law-pro'),
+        'bankruptcy_law_pro_service_meta_box_callback',
+        'service',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'bankruptcy_law_pro_add_service_meta_boxes');
+
+function bankruptcy_law_pro_service_meta_box_callback($post) {
+    wp_nonce_field('bankruptcy_law_pro_save_service_meta', 'service_meta_nonce');
+
+    $link = get_post_meta($post->ID, '_service_link', true);
+    $icon = get_post_meta($post->ID, '_service_icon', true);
+
+    echo '<p><label for="service_link">' . __('Ссылка на страницу услуги', 'bankruptcy-law-pro') . '</label>';
+    echo '<input type="url" id="service_link" name="service_link" value="' . esc_url($link) . '" size="25" /></p>';
+
+    echo '<p><label for="service_icon">' . __('Класс иконки (Font Awesome)', 'bankruptcy-law-pro') . '</label>';
+    echo '<input type="text" id="service_icon" name="service_icon" value="' . esc_attr($icon) . '" size="25" placeholder="fas fa-briefcase" />';
+    echo '<p class="description">' . __('Например: ', 'bankruptcy-law-pro') . '<code>fas fa-money-bill-wave</code></p>';
+}
+
+function bankruptcy_law_pro_save_service_meta($post_id) {
+    if (!isset($_POST['service_meta_nonce']) || !wp_verify_nonce($_POST['service_meta_nonce'], 'bankruptcy_law_pro_save_service_meta')) {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    if (isset($_POST['service_link'])) {
+        update_post_meta($post_id, '_service_link', esc_url_raw($_POST['service_link']));
+    }
+    if (isset($_POST['service_icon'])) {
+        update_post_meta($post_id, '_service_icon', sanitize_text_field($_POST['service_icon']));
+    }
+}
+add_action('save_post', 'bankruptcy_law_pro_save_service_meta');
 
 /**
  * Fallback меню
