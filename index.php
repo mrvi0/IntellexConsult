@@ -37,17 +37,36 @@ get_header(); ?>
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-                        <div class="entry-content">
-                            <?php the_content(); ?>
-                        </div>
-                    <?php endwhile; endif; ?>
+                    <?php 
+                    $about_text = get_theme_mod('about_text', 'Intellex Consult - это команда профессионалов с многолетним опытом в сфере банкротства. Мы специализируемся на комплексном решении проблем, связанных с финансовыми трудностями физических и юридических лиц.
+
+Наша миссия - помочь клиентам найти оптимальное решение в сложных финансовых ситуациях, защитить их интересы и минимизировать риски. Мы работаем как с должниками, так и с кредиторами, обеспечивая справедливое и законное разрешение споров.
+
+За годы работы мы успешно провели сотни процедур банкротства, взыскали миллионы рублей задолженности и защитили интересы арбитражных управляющих. Наш опыт позволяет нам находить нестандартные решения даже в самых сложных случаях.');
+                    
+                    if ($about_text) {
+                        echo '<div class="entry-content">' . wpautop($about_text) . '</div>';
+                    } else {
+                        // Fallback к контенту постов, если кастомный текст не задан
+                        if (have_posts()) : while (have_posts()) : the_post(); ?>
+                            <div class="entry-content">
+                                <?php the_content(); ?>
+                            </div>
+                        <?php endwhile; endif;
+                    }
+                    ?>
                 </div>
                 <div class="about-image">
-                    <?php if (get_theme_mod('about_image')) : ?>
-                        <img src="<?php echo esc_url(get_theme_mod('about_image')); ?>" alt="О нашей компании">
+                    <?php 
+                    $about_image = get_theme_mod('about_image');
+                    if ($about_image) : ?>
+                        <img src="<?php echo esc_url($about_image); ?>" alt="О нашей компании">
                     <?php else : ?>
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/about-placeholder.jpg" alt="О нашей компании">
+                        <!-- Заглушка для изображения -->
+                        <div class="about-image-placeholder">
+                            <i class="fas fa-building" style="font-size: 120px; color: #e5e5e5; margin-bottom: 20px;"></i>
+                            <p style="color: #999; font-size: 16px; text-align: center;">Загрузите изображение в настройках темы</p>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>

@@ -197,33 +197,200 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     // Секция "Главная страница"
     $wp_customize->add_section('homepage_settings', array(
         'title' => __('Главная страница', 'bankruptcy-law-pro'),
-        'priority' => 35,
+        'priority' => 30,
     ));
-    
-    // Заголовок главного экрана
+
+    // Hero секция
     $wp_customize->add_setting('hero_title', array(
-        'default' => 'Профессиональная помощь в банкротстве',
+        'default' => 'Intellex Consult - Эксперты в банкротстве',
         'sanitize_callback' => 'sanitize_text_field',
     ));
-    
+
     $wp_customize->add_control('hero_title', array(
-        'label' => __('Заголовок главного экрана', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок Hero секции', 'bankruptcy-law-pro'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
-    
-    // Подзаголовок главного экрана
+
     $wp_customize->add_setting('hero_subtitle', array(
-        'default' => 'Получите квалифицированную юридическую поддержку в процедуре банкротства',
+        'default' => 'Команда профессионалов с 5-летним опытом в сфере банкротства. Взыскание задолженности, субсидиарная ответственность, защита арбитражных управляющих. 100% эффективность.',
         'sanitize_callback' => 'sanitize_textarea_field',
     ));
-    
+
     $wp_customize->add_control('hero_subtitle', array(
-        'label' => __('Подзаголовок главного экрана', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок Hero секции', 'bankruptcy-law-pro'),
         'section' => 'homepage_settings',
         'type' => 'textarea',
     ));
-    
+
+    // Раздел "О нас"
+    $wp_customize->add_setting('about_title', array(
+        'default' => 'О нашей компании',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('about_title', array(
+        'label' => __('Заголовок раздела "О нас"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    $wp_customize->add_setting('about_subtitle', array(
+        'default' => 'Мы специализируемся на банкротстве физических и юридических лиц с 2010 года',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('about_subtitle', array(
+        'label' => __('Подзаголовок раздела "О нас"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    $wp_customize->add_setting('about_text', array(
+        'default' => 'Intellex Consult - это команда профессионалов с многолетним опытом в сфере банкротства. Мы специализируемся на комплексном решении проблем, связанных с финансовыми трудностями физических и юридических лиц.
+
+Наша миссия - помочь клиентам найти оптимальное решение в сложных финансовых ситуациях, защитить их интересы и минимизировать риски. Мы работаем как с должниками, так и с кредиторами, обеспечивая справедливое и законное разрешение споров.
+
+За годы работы мы успешно провели сотни процедур банкротства, взыскали миллионы рублей задолженности и защитили интересы арбитражных управляющих. Наш опыт позволяет нам находить нестандартные решения даже в самых сложных случаях.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+
+    $wp_customize->add_control('about_text', array(
+        'label' => __('Текст раздела "О нас"', 'bankruptcy-law-pro'),
+        'description' => __('Основной текст, который будет отображаться в разделе "О нас"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'textarea',
+        'input_attrs' => array(
+            'rows' => 10,
+        ),
+    ));
+
+    $wp_customize->add_setting('about_image', array(
+        'default' => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'about_image', array(
+        'label' => __('Изображение раздела "О нас"', 'bankruptcy-law-pro'),
+        'description' => __('Загрузите изображение для раздела "О нас". Рекомендуемый размер: 600x400px', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+    )));
+
+    // Раздел "Услуги"
+    $wp_customize->add_setting('services_title', array(
+        'default' => 'Наши услуги',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('services_title', array(
+        'label' => __('Заголовок раздела "Услуги"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    $wp_customize->add_setting('services_subtitle', array(
+        'default' => 'Полный спектр услуг в сфере банкротства и взыскания задолженности',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('services_subtitle', array(
+        'label' => __('Подзаголовок раздела "Услуги"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    // Раздел "Преимущества"
+    $wp_customize->add_setting('features_title', array(
+        'default' => 'Почему выбирают Intellex Consult',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('features_title', array(
+        'label' => __('Заголовок раздела "Преимущества"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    $wp_customize->add_setting('features_subtitle', array(
+        'default' => 'Наши достижения и преимущества в сфере банкротства',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('features_subtitle', array(
+        'label' => __('Подзаголовок раздела "Преимущества"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    // Раздел "Команда"
+    $wp_customize->add_setting('team_title', array(
+        'default' => 'Наша команда',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('team_title', array(
+        'label' => __('Заголовок раздела "Команда"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    $wp_customize->add_setting('team_subtitle', array(
+        'default' => 'Профессиональные юристы по банкротству',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('team_subtitle', array(
+        'label' => __('Подзаголовок раздела "Команда"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    // Раздел "Отзывы"
+    $wp_customize->add_setting('testimonials_title', array(
+        'default' => 'Отзывы клиентов',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('testimonials_title', array(
+        'label' => __('Заголовок раздела "Отзывы"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    $wp_customize->add_setting('testimonials_subtitle', array(
+        'default' => 'Что говорят о нас наши клиенты',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('testimonials_subtitle', array(
+        'label' => __('Подзаголовок раздела "Отзывы"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    // Раздел "Контакты"
+    $wp_customize->add_setting('contact_title', array(
+        'default' => 'Свяжитесь с нами',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('contact_title', array(
+        'label' => __('Заголовок раздела "Контакты"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
+    $wp_customize->add_setting('contact_subtitle', array(
+        'default' => 'Получите бесплатную консультацию по банкротству',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('contact_subtitle', array(
+        'label' => __('Подзаголовок раздела "Контакты"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+
     // Секция "Контакты"
     $wp_customize->add_section('contact_settings', array(
         'title' => __('Контакты', 'bankruptcy-law-pro'),
