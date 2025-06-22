@@ -465,4 +465,78 @@
         };
     }
 
+    // Анимация при прокрутке
+    const scrollElements = document.querySelectorAll('.scroll-animation');
+    
+    const elementInView = (el, offset = 150) => {
+        const elementTop = el.getBoundingClientRect().top;
+        return (
+            elementTop <= (window.innerHeight || document.documentElement.clientHeight) - offset
+        );
+    };
+    
+    const displayScrollElement = (element) => {
+        element.classList.add('active');
+    };
+    
+    const hideScrollElement = (element) => {
+        element.classList.remove('active');
+    };
+    
+    const handleScrollAnimation = () => {
+        scrollElements.forEach((el) => {
+            if (elementInView(el)) {
+                displayScrollElement(el);
+            } else {
+                hideScrollElement(el);
+            }
+        });
+    };
+    
+    // Первичная проверка элементов при загрузке
+    window.addEventListener('load', () => {
+        handleScrollAnimation();
+    });
+    
+    // Проверка при скролле
+    window.addEventListener('scroll', () => {
+        handleScrollAnimation();
+    });
+
+    // Анимация счетчиков статистики
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+        
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            const duration = 2000; // 2 секунды
+            const step = target / (duration / 16); // 60 FPS
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                counter.textContent = Math.floor(current);
+            }, 16);
+        });
+    }
+    
+    // Запуск анимации счетчиков при появлении в поле зрения
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        observer.observe(statsSection);
+    }
+
 })(jQuery); 
