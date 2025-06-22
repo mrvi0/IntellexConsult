@@ -904,7 +904,6 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
             $this->repo_name = 'mrvi0/IntellexConsult'; // Пример: 'owner/my-theme-repo'
 
             add_filter('pre_set_site_transient_update_themes', array($this, 'check_for_update'));
-            add_filter('upgrader_package_options', array($this, 'add_auth_header_for_download'));
             
             // Добавляем отладку
             add_action('admin_notices', array($this, 'debug_notice'));
@@ -945,11 +944,20 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
                     error_log('Intellex Consult Updater: Update available!');
                 }
                 
+                $package_url = $this->get_redirected_zipball_url("https://api.github.com/repos/{$this->repo_name}/zipball/{$remote_release->tag_name}");
+
+                if (!$package_url) {
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log('Intellex Consult Updater: FAILED to resolve redirect URL. Aborting update availability.');
+                    }
+                    return $transient;
+                }
+
                 $transient->response[$this->theme_slug] = array(
                     'theme'       => $this->theme_slug,
                     'new_version' => $remote_version,
                     'url'         => $remote_release->html_url,
-                    'package'     => "https://api.github.com/repos/{$this->repo_name}/zipball/{$remote_release->tag_name}",
+                    'package'     => $package_url,
                 );
             } else {
                 if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -960,18 +968,50 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
             return $transient;
         }
 
-        public function add_auth_header_for_download($options) {
-            if (isset($options['hook_extra']['theme']) && $options['hook_extra']['theme'] === $this->theme_slug) {
-                if (!empty($this->pat)) {
-                    $options['http_args']['headers'] = [
-                        'Authorization' => "Bearer {$this->pat}",
-                        'Accept' => 'application/vnd.github+json',
-                        'X-GitHub-Api-Version' => '2022-11-28',
-                        'User-Agent' => 'Intellex-Consult-Theme-Updater'
-                    ];
-                }
+        private function get_redirected_zipball_url($url) {
+            if (empty($this->pat)) {
+                return false;
             }
-            return $options;
+
+            $args = [
+                'timeout'   => 15,
+                'headers'   => [
+                    'Authorization' => "Bearer {$this->pat}",
+                    'Accept'        => 'application/vnd.github+json',
+                    'X-GitHub-Api-Version' => '2022-11-28'
+                ],
+                'method'    => 'HEAD'
+            ];
+
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("Intellex Consult Updater: Requesting HEAD for redirect from {$url}");
+            }
+            
+            $response = wp_remote_request($url, $args);
+
+            if (is_wp_error($response)) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Intellex Consult Updater: WP Error on HEAD request: ' . $response->get_error_message());
+                }
+                return false;
+            }
+
+            $response_code = wp_remote_retrieve_response_code($response);
+            
+            if ($response_code === 302) {
+                $redirect_url = wp_remote_retrieve_header($response, 'location');
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log("Intellex Consult Updater: Resolved redirect URL to: {$redirect_url}");
+                }
+                return $redirect_url;
+            } else {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    $response_body = wp_remote_retrieve_body($response);
+                    error_log("Intellex Consult Updater: Expected a 302 redirect but got {$response_code}.");
+                    error_log('Intellex Consult Updater: Response body on HEAD: ' . $response_body);
+                }
+                return false;
+            }
         }
 
         private function _get_latest_github_release() {
