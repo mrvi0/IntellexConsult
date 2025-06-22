@@ -707,23 +707,18 @@ body {
 }
 
 .faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.faq-item.active .faq-answer {
-    max-height: 500px;
-}
-
-.faq-answer p {
+    display: none;
     padding: 0 30px 25px;
     color: #666666;
     line-height: 1.6;
 }
 
+.faq-answer p {
+    margin-bottom: 15px;
+}
+
 .faq-answer ul {
-    padding: 0 30px 25px;
+    padding-left: 20px;
     color: #666666;
 }
 
