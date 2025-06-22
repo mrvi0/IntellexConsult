@@ -441,11 +441,6 @@
         </div>
     </footer>
 
-    <!-- Кнопка "Наверх" -->
-    <button id="back-to-top" class="back-to-top" aria-label="Наверх">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
     <!-- Скрипты -->
     <script>
         // Мобильное меню
@@ -525,26 +520,6 @@
                 header.style.padding = '';
                 header.style.boxShadow = '';
             }
-        });
-
-        // Кнопка "Наверх"
-        const backToTop = document.getElementById('back-to-top');
-        
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('show');
-            } else {
-                backToTop.classList.remove('show');
-            }
-        });
-
-        backToTop.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
         });
     </script>
 </body>

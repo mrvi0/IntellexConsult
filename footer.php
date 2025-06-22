@@ -123,11 +123,6 @@
     </footer>
 </div><!-- #page -->
 
-<!-- Кнопка "Наверх" -->
-<button id="back-to-top" class="back-to-top" aria-label="Наверх">
-    <i class="fas fa-chevron-up"></i>
-</button>
-
 <!-- Модальное окно для заявки -->
 <div id="request-modal" class="modal">
     <div class="modal-content">

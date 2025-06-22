@@ -13,7 +13,6 @@
         // Инициализация всех функций
         initMobileMenu();
         initSmoothScroll();
-        initBackToTop();
         initModal();
         initScrollAnimations();
         initHeaderScroll();
@@ -87,33 +86,6 @@
                     history.pushState(null, null, href);
                 }
             }
-        });
-    }
-
-    /**
-     * Кнопка "Наверх"
-     */
-    function initBackToTop() {
-        const $backToTop = $('#back-to-top');
-        
-        $(window).on('scroll', function() {
-            if ($(this).scrollTop() > 300) {
-                $backToTop.addClass('show');
-            } else {
-                $backToTop.removeClass('show');
-            }
-        });
-
-        $backToTop.on('click', function(e) {
-            e.preventDefault();
-            
-            // Плавный скролл наверх
-            $('html, body').animate({
-                scrollTop: 0
-            }, {
-                duration: 800,
-                easing: 'easeInOutCubic'
-            });
         });
     }
 
