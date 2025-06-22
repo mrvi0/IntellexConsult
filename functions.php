@@ -706,4 +706,70 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
     }
     
     new Bankruptcy_Law_Pro_GitHub_Updater();
-} 
+}
+
+/****************************************************************/
+/*                      THEME OPTIONS PAGE                      */
+/****************************************************************/
+
+// Добавление страницы настроек темы
+function bankruptcy_law_pro_add_theme_options_page() {
+    add_theme_page(
+        'Настройки темы Intellex Consult', // Title of the page
+        'Настройки темы',                  // Text to show on the menu
+        'edit_theme_options',              // Capability requirement
+        'intellex_consult_options',        // Menu slug
+        'bankruptcy_law_pro_render_options_page' // Callback function
+    );
+}
+add_action('admin_menu', 'bankruptcy_law_pro_add_theme_options_page');
+
+// Рендер страницы настроек
+function bankruptcy_law_pro_render_options_page() {
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+        <div class="card">
+            <h2 class="title">Проверка обновлений</h2>
+            <p>Нажмите на кнопку ниже, чтобы принудительно проверить наличие обновлений для темы. WordPress также проверяет обновления автоматически дважды в день.</p>
+            <p>Если новая версия доступна, вы увидите уведомление в разделе "Внешний вид" -> "Темы" или "Консоль" -> "Обновления".</p>
+            
+            <?php
+                $check_url = wp_nonce_url(
+                    admin_url('themes.php?page=intellex_consult_options&action=check_theme_update'),
+                    'check_updates_nonce',
+                    'intellex_nonce'
+                );
+            ?>
+            
+            <a href="<?php echo esc_url($check_url); ?>" class="button button-primary">Проверить обновления</a>
+        </div>
+    </div>
+    <?php
+}
+
+// Обработчик ручной проверки обновлений
+function bankruptcy_law_pro_manual_update_check() {
+    if (isset($_GET['action']) && $_GET['action'] === 'check_theme_update') {
+        // Проверка nonce для безопасности
+        if (!isset($_GET['intellex_nonce']) || !wp_verify_nonce($_GET['intellex_nonce'], 'check_updates_nonce')) {
+            wp_die('Проверка безопасности не пройдена!');
+        }
+        
+        // Удаляем кеш с информацией об обновлениях тем
+        delete_site_transient('update_themes');
+
+        // Перенаправляем обратно на страницу настроек с сообщением об успехе
+        wp_redirect(admin_url('themes.php?page=intellex_consult_options&update-checked=true'));
+        exit;
+    }
+}
+add_action('admin_init', 'bankruptcy_law_pro_manual_update_check');
+
+// Уведомление об успешной проверке
+function bankruptcy_law_pro_update_checked_notice() {
+    if (isset($_GET['update-checked']) && $_GET['update-checked'] === 'true') {
+        echo '<div class="notice notice-success is-dismissible"><p>Проверка обновлений завершена. Если доступна новая версия, вы увидите уведомление.</p></div>';
+    }
+}
+add_action('admin_notices', 'bankruptcy_law_pro_update_checked_notice'); 
