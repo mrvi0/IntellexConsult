@@ -440,20 +440,12 @@
     function initFAQ() {
         $('.faq-question').on('click', function() {
             const $faqItem = $(this).closest('.faq-item');
-            const $answer = $faqItem.find('.faq-answer');
             
             // Закрываем все остальные элементы
             $('.faq-item').not($faqItem).removeClass('active');
-            $('.faq-item').not($faqItem).find('.faq-answer').slideUp(300);
             
             // Переключаем текущий элемент
             $faqItem.toggleClass('active');
-            
-            if ($faqItem.hasClass('active')) {
-                $answer.slideDown(300);
-            } else {
-                $answer.slideUp(300);
-            }
         });
     }
 

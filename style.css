@@ -690,22 +690,37 @@ body {
 }
 
 .faq-toggle {
-    margin-left: 18px;
-    color: #007bff;
-    font-size: 1.1rem;
-    transition: transform 0.3s;
+    width: 30px;
+    height: 30px;
+    background: #000000;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .faq-item.active .faq-toggle {
-    transform: rotate(180deg);
-    color: #0056b3;
+    background: #333333;
+    transform: rotate(45deg);
 }
 
 .faq-answer {
-    display: none;
-    padding: 0 30px 25px;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 30px;
     color: #666666;
     line-height: 1.6;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 0 30px 25px;
 }
 
 .faq-answer p {
@@ -748,17 +763,18 @@ body {
 }
 
 .contact-icon {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     background: linear-gradient(135deg, #000000 0%, #333333 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 2rem;
+    margin: 0;
+    font-size: 1.2rem;
     color: #ffffff;
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .contact-text h4 {
@@ -850,13 +866,34 @@ textarea.form-control {
 }
 
 .footer-contacts .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
     margin-bottom: 15px;
 }
 
 .footer-contacts .contact-icon {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background: #333333;
+    color: #ffffff;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.footer-contacts .contact-item p {
+    margin: 0;
+    color: #cccccc;
+    line-height: 1.4;
+}
+
+.footer-contacts .contact-item a {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-contacts .contact-item a:hover {
     color: #ffffff;
 }
 
@@ -1219,17 +1256,18 @@ textarea.form-control {
 }
 
 .contact-icon {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     background: linear-gradient(135deg, #000000 0%, #333333 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 2rem;
+    margin: 0;
+    font-size: 1.2rem;
     color: #ffffff;
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .contact-card:hover .contact-icon {
