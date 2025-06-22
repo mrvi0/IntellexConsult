@@ -949,7 +949,7 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
                     'theme'       => $this->theme_slug,
                     'new_version' => $remote_version,
                     'url'         => $remote_release->html_url,
-                    'package'     => $remote_release->zipball_url,
+                    'package'     => "https://api.github.com/repos/{$this->repo_name}/zipball/{$remote_release->tag_name}",
                 );
             } else {
                 if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -964,7 +964,10 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
             if (isset($options['hook_extra']['theme']) && $options['hook_extra']['theme'] === $this->theme_slug) {
                 if (!empty($this->pat)) {
                     $options['http_args']['headers'] = [
-                        'Authorization' => "token {$this->pat}"
+                        'Authorization' => "Bearer {$this->pat}",
+                        'Accept' => 'application/vnd.github+json',
+                        'X-GitHub-Api-Version' => '2022-11-28',
+                        'User-Agent' => 'Intellex-Consult-Theme-Updater'
                     ];
                 }
             }
@@ -977,8 +980,9 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
             
             if (!empty($this->pat)) {
                 $args['headers'] = [
-                    'Authorization' => "token {$this->pat}",
-                    'Accept' => 'application/vnd.github.v3+json',
+                    'Authorization' => "Bearer {$this->pat}",
+                    'Accept' => 'application/vnd.github+json',
+                    'X-GitHub-Api-Version' => '2022-11-28',
                     'User-Agent' => 'Intellex-Consult-Theme-Updater'
                 ];
             }
@@ -1019,7 +1023,7 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
 
             $release = json_decode($response_body);
 
-            if (empty($release) || !isset($release->tag_name) || !isset($release->zipball_url)) {
+            if (empty($release) || !isset($release->tag_name)) {
                 if (defined('WP_DEBUG') && WP_DEBUG) {
                     error_log('Intellex Consult Updater: Invalid release data');
                     error_log('Intellex Consult Updater: Response: ' . $response_body);
@@ -1058,7 +1062,12 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
                     echo '<p><strong>URL запроса:</strong> ' . esc_html($url) . '</p>';
                     
                     $args = ['timeout' => 15];
-                    $args['headers'] = ['Authorization' => "token {$pat}"];
+                    $args['headers'] = [
+                        'Authorization' => "Bearer {$pat}",
+                        'Accept' => 'application/vnd.github+json',
+                        'X-GitHub-Api-Version' => '2022-11-28',
+                        'User-Agent' => 'Intellex-Consult-Theme-Updater'
+                    ];
                     
                     $response = wp_remote_get($url, $args);
                     
@@ -1089,6 +1098,7 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
                                 echo '<p><strong>Последняя версия на GitHub:</strong> ' . esc_html($remote_version) . '</p>';
                                 echo '<p><strong>Обновление доступно:</strong> ' . (version_compare($theme->get('Version'), $remote_version, '<') ? 'Да' : 'Нет') . '</p>';
                                 echo '<p><strong>URL релиза:</strong> <a href="' . esc_url($release->html_url) . '" target="_blank">' . esc_html($release->html_url) . '</a></p>';
+                                echo '<p><strong>URL для скачивания zipball:</strong> <a href="' . esc_url("https://api.github.com/repos/{$this->repo_name}/zipball/{$release->tag_name}") . '" target="_blank">' . esc_html("https://api.github.com/repos/{$this->repo_name}/zipball/{$release->tag_name}") . '</a></p>';
                             } else {
                                 echo '<p><strong>Ошибка парсинга JSON:</strong> Неверный формат ответа</p>';
                                 echo '<p><strong>Тело ответа:</strong></p>';
