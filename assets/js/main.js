@@ -64,28 +64,27 @@
      */
     function initSmoothScroll() {
         $('a[href^="#"]').on('click', function(e) {
-            e.preventDefault();
-            
             const href = $(this).attr('href');
-            
-            // Пропускаем пустые ссылки
-            if (href === '#') {
+
+            // Пропускаем ссылки, которые используются для других целей (например, табы)
+            if (!href || href === '#' || $(this).data('toggle')) {
                 return;
             }
-            
+
             const target = $(href);
+
             if (target.length) {
+                e.preventDefault();
                 const headerHeight = $('.header').outerHeight() || 0;
-                const targetPosition = target.offset().top - headerHeight - 20; // Дополнительный отступ
-                
-                $('html, body').animate({
+                const targetPosition = target.offset().top - headerHeight - 20;
+
+                $('html, body').stop().animate({
                     scrollTop: targetPosition
                 }, {
                     duration: 800,
-                    easing: 'easeInOutCubic'
+                    easing: 'swing' // Заменено на стандартную функцию
                 });
-                
-                // Обновляем URL без перезагрузки страницы
+
                 if (history.pushState) {
                     history.pushState(null, null, href);
                 }
