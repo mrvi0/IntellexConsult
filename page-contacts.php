@@ -1,6 +1,6 @@
 <?php
 /**
- * Шаблон страницы контактов
+ * Template Name: Страница Контакты
  * 
  * @package intellex-consult
  */

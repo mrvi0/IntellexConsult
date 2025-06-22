@@ -682,7 +682,7 @@ function bankruptcy_law_pro_custom_post_types() {
         'public' => true,
         'menu_icon' => 'dashicons-briefcase',
         'has_archive' => true,
-        'rewrite' => array('slug' => 'services'),
+        'rewrite' => array('slug' => 'legal-services'),
         'supports' => array('title', 'editor', 'thumbnail'),
     ));
 

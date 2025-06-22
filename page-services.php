@@ -5,6 +5,11 @@
  * @package intellex-consult
  */
 
+// Отладочная информация
+if (current_user_can('administrator')) {
+    echo '<!-- Шаблон страницы услуг загружен -->';
+}
+
 get_header(); ?>
 
 <main id="main" class="site-main">
