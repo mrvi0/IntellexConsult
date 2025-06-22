@@ -840,28 +840,56 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
 
             add_filter('pre_set_site_transient_update_themes', array($this, 'check_for_update'));
             add_filter('upgrader_package_options', array($this, 'add_auth_header_for_download'));
+            
+            // Добавляем отладку
+            add_action('admin_notices', array($this, 'debug_notice'));
         }
 
         public function check_for_update($transient) {
+            // Добавляем отладку
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Intellex Consult Updater: Checking for updates');
+                error_log('Intellex Consult Updater: Current version: ' . $this->version);
+                error_log('Intellex Consult Updater: PAT set: ' . (!empty($this->pat) ? 'Yes' : 'No'));
+            }
+
             if (empty($transient->checked) || empty($this->pat)) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Intellex Consult Updater: Skipping check - empty transient or no PAT');
+                }
                 return $transient;
             }
 
-            $remote_release = $this->get_latest_github_release();
+            $remote_release = $this->_get_latest_github_release();
 
             if (!$remote_release) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Intellex Consult Updater: No remote release found');
+                }
                 return $transient;
             }
             
             $remote_version = ltrim($remote_release->tag_name, 'v');
 
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Intellex Consult Updater: Remote version: ' . $remote_version);
+            }
+
             if (version_compare($this->version, $remote_version, '<')) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Intellex Consult Updater: Update available!');
+                }
+                
                 $transient->response[$this->theme_slug] = array(
                     'theme'       => $this->theme_slug,
                     'new_version' => $remote_version,
                     'url'         => $remote_release->html_url,
                     'package'     => $remote_release->zipball_url,
                 );
+            } else {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Intellex Consult Updater: No update needed');
+                }
             }
 
             return $transient;
@@ -878,27 +906,93 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
             return $options;
         }
 
-        private function get_latest_github_release() {
+        private function _get_latest_github_release() {
             $url = "https://api.github.com/repos/{$this->repo_name}/releases/latest";
-            $args = ['timeout' => 10];
+            $args = ['timeout' => 15];
             
             if (!empty($this->pat)) {
                 $args['headers'] = ['Authorization' => "token {$this->pat}"];
             }
 
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Intellex Consult Updater: Requesting: ' . $url);
+            }
+
             $response = wp_remote_get($url, $args);
 
-            if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
+            if (is_wp_error($response)) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Intellex Consult Updater: WP Error: ' . $response->get_error_message());
+                }
+                return false;
+            }
+
+            $response_code = wp_remote_retrieve_response_code($response);
+            if ($response_code !== 200) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Intellex Consult Updater: HTTP Error: ' . $response_code);
+                    error_log('Intellex Consult Updater: Response body: ' . wp_remote_retrieve_body($response));
+                }
                 return false;
             }
 
             $release = json_decode(wp_remote_retrieve_body($response));
 
             if (empty($release) || !isset($release->tag_name) || !isset($release->zipball_url)) {
-                 return false;
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Intellex Consult Updater: Invalid release data');
+                }
+                return false;
+            }
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Intellex Consult Updater: Release found: ' . $release->tag_name);
             }
             
             return $release;
+        }
+
+        // Отладочное уведомление
+        public function debug_notice() {
+            if (isset($_GET['page']) && $_GET['page'] === 'intellex_consult_options' && current_user_can('manage_options')) {
+                $theme = wp_get_theme();
+                $pat = get_theme_mod('github_pat');
+                
+                echo '<div class="notice notice-info is-dismissible">';
+                echo '<h4>Отладочная информация Intellex Consult Updater:</h4>';
+                echo '<p><strong>Тема:</strong> ' . esc_html($theme->get('Name')) . '</p>';
+                echo '<p><strong>Текущая версия:</strong> ' . esc_html($theme->get('Version')) . '</p>';
+                echo '<p><strong>Slug темы:</strong> ' . esc_html($theme->get_stylesheet()) . '</p>';
+                echo '<p><strong>Репозиторий:</strong> ' . esc_html($this->repo_name) . '</p>';
+                echo '<p><strong>PAT настроен:</strong> ' . (!empty($pat) ? 'Да (' . substr($pat, 0, 8) . '...)' : 'Нет') . '</p>';
+                
+                // Проверяем последний релиз
+                if (!empty($pat)) {
+                    $remote_release = $this->_get_latest_github_release();
+                    if ($remote_release) {
+                        $remote_version = ltrim($remote_release->tag_name, 'v');
+                        echo '<p><strong>Последняя версия на GitHub:</strong> ' . esc_html($remote_version) . '</p>';
+                        echo '<p><strong>Обновление доступно:</strong> ' . (version_compare($theme->get('Version'), $remote_version, '<') ? 'Да' : 'Нет') . '</p>';
+                    } else {
+                        echo '<p><strong>Последняя версия на GitHub:</strong> Не удалось получить</p>';
+                    }
+                }
+                
+                echo '</div>';
+            }
+        }
+
+        // Геттеры для доступа к свойствам
+        public function get_theme_slug() {
+            return $this->theme_slug;
+        }
+
+        public function get_version() {
+            return $this->version;
+        }
+
+        public function get_latest_github_release() {
+            return $this->_get_latest_github_release();
         }
     }
     
@@ -991,6 +1085,20 @@ function bankruptcy_law_pro_manual_update_check() {
         
         // Удаляем кеш с информацией об обновлениях тем
         delete_site_transient('update_themes');
+        
+        // Принудительно вызываем проверку обновлений
+        $updater = new Bankruptcy_Law_Pro_GitHub_Updater();
+        
+        // Создаем временный transient для проверки
+        $transient = new stdClass();
+        $transient->checked = array();
+        $transient->checked[$updater->get_theme_slug()] = $updater->get_version();
+        
+        // Вызываем проверку обновлений
+        $updated_transient = $updater->check_for_update($transient);
+        
+        // Сохраняем результат
+        set_site_transient('update_themes', $updated_transient);
 
         // Перенаправляем обратно на страницу настроек с сообщением об успехе
         wp_redirect(admin_url('themes.php?page=intellex_consult_options&update-checked=true'));
