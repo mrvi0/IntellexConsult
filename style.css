@@ -690,22 +690,15 @@ body {
 }
 
 .faq-toggle {
-    width: 30px;
-    height: 30px;
-    background: #000000;
-    color: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
+    margin-left: 18px;
+    color: #007bff;
+    font-size: 1.1rem;
+    transition: transform 0.3s;
 }
 
 .faq-item.active .faq-toggle {
-    background: #333333;
-    transform: rotate(45deg);
+    transform: rotate(180deg);
+    color: #0056b3;
 }
 
 .faq-answer {
@@ -2085,12 +2078,13 @@ textarea.form-control {
 }
 .faq-question i {
     margin-left: 18px;
-    color: #000000;
+    color: #007bff;
     font-size: 1.1rem;
     transition: transform 0.3s;
 }
 .faq-item.active .faq-question i {
     transform: rotate(180deg);
+    color: #0056b3;
 }
 @media (max-width: 900px) {
     .services-grid, .benefits-grid {

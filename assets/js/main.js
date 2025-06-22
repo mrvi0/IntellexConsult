@@ -539,17 +539,4 @@
         observer.observe(statsSection);
     }
 
-    // FAQ аккордеон для страницы услуг
-    document.querySelectorAll('.faq-question').forEach(function(q) {
-        q.addEventListener('click', function() {
-            const item = q.closest('.faq-item');
-            if (item.classList.contains('active')) {
-                item.classList.remove('active');
-            } else {
-                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('active'); });
-                item.classList.add('active');
-            }
-        });
-    });
-
 })(jQuery); 
