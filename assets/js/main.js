@@ -21,6 +21,7 @@
         initLazyLoading();
         initTooltips();
         initFAQ();
+        initNumberAnimation();
         
     });
 
@@ -336,25 +337,42 @@
     }
 
     /**
-     * Счетчик статистики
+     * Анимация чисел при прокрутке (объединенная функция)
      */
-    function initCounters() {
-        $('.counter').each(function() {
-            const $this = $(this);
-            const countTo = $this.attr('data-count');
-            
-            $({ countNum: $this.text() }).animate({
-                countNum: countTo
-            }, {
-                duration: 2000,
-                easing: 'swing',
-                step: function() {
-                    $this.text(Math.floor(this.countNum));
-                },
-                complete: function() {
-                    $this.text(this.countNum);
+    function initNumberAnimation() {
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const $counter = $(entry.target);
+                    const countTo = parseInt($counter.data('count'), 10);
+                    const duration = 2000;
+                    
+                    if (isNaN(countTo)) {
+                        return;
+                    }
+                    
+                    $({ countNum: 0 }).animate({
+                        countNum: countTo
+                    }, {
+                        duration: duration,
+                        easing: 'swing',
+                        step: function() {
+                            $counter.text(Math.floor(this.countNum));
+                        },
+                        complete: function() {
+                            $counter.text(this.countNum.toLocaleString('ru-RU'));
+                        }
+                    });
+                    
+                    observer.unobserve(entry.target);
                 }
             });
+        }, {
+            threshold: 0.5
+        });
+
+        $('.number-counter, .counter').each(function() {
+            observer.observe(this);
         });
     }
 
@@ -404,40 +422,6 @@
                 ]
             });
         }
-    }
-
-    /**
-     * Анимация чисел при прокрутке
-     */
-    function initNumberAnimation() {
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const $counter = $(entry.target);
-                    const countTo = parseInt($counter.data('count'));
-                    const duration = 2000;
-                    
-                    $({ countNum: 0 }).animate({
-                        countNum: countTo
-                    }, {
-                        duration: duration,
-                        easing: 'swing',
-                        step: function() {
-                            $counter.text(Math.floor(this.countNum));
-                        },
-                        complete: function() {
-                            $counter.text(this.countNum);
-                        }
-                    });
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        });
-
-        $('.number-counter').each(function() {
-            observer.observe(this);
-        });
     }
 
     /**
@@ -505,7 +489,6 @@
     if (typeof window.bankruptcyLawPro === 'undefined') {
         window.bankruptcyLawPro = {
             showNotification: showNotification,
-            initCounters: initCounters,
             initServiceFilter: initServiceFilter
         };
     }
