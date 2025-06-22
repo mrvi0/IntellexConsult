@@ -471,6 +471,43 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
         'type' => 'text',
     ));
 
+    // Заголовок hero секции страницы контактов
+    $wp_customize->add_setting('contact_hero_title', array(
+        'default' => 'Свяжитесь с нами',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    
+    $wp_customize->add_control('contact_hero_title', array(
+        'label' => __('Заголовок страницы контактов', 'bankruptcy-law-pro'),
+        'section' => 'contact_settings',
+        'type' => 'text',
+    ));
+
+    // Подзаголовок hero секции страницы контактов
+    $wp_customize->add_setting('contact_hero_subtitle', array(
+        'default' => 'Мы всегда готовы ответить на ваши вопросы и помочь в решении любых юридических задач',
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+    
+    $wp_customize->add_control('contact_hero_subtitle', array(
+        'label' => __('Подзаголовок страницы контактов', 'bankruptcy-law-pro'),
+        'section' => 'contact_settings',
+        'type' => 'textarea',
+    ));
+
+    // Код карты
+    $wp_customize->add_setting('contact_map_embed', array(
+        'default' => '',
+        'sanitize_callback' => 'wp_kses_post',
+    ));
+    
+    $wp_customize->add_control('contact_map_embed', array(
+        'label' => __('Код карты (iframe)', 'bankruptcy-law-pro'),
+        'section' => 'contact_settings',
+        'description' => __('Вставьте код карты Google Maps или Яндекс.Карт', 'bankruptcy-law-pro'),
+        'type' => 'textarea',
+    ));
+
     // Секция "Футер"
     $wp_customize->add_section('footer_settings', array(
         'title' => __('Футер', 'bankruptcy-law-pro'),
