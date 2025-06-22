@@ -352,29 +352,29 @@ get_header(); ?>
                 ?>
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3><?php echo get_default_faq_question(1); ?></h3>
+                            <h3>Сколько длится процедура банкротства?</h3>
                             <div class="faq-toggle"><i class="fas fa-plus"></i></div>
                         </div>
                         <div class="faq-answer">
-                            <p><?php echo get_default_faq_answer(1); ?></p>
+                            <p>Многие думают, что дело о банкротстве длится 6 месяцев, но на практике это не всегда так. Сроки процедуры банкротства зависят от множества факторов: активности кредиторов, загруженности судов, наличия ликвидного имущества, уровня дохода (для физического лица) и др.</p>
                         </div>
                     </div>
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3><?php echo get_default_faq_question(2); ?></h3>
+                            <h3>Какие последствия процедуры банкротства?</h3>
                             <div class="faq-toggle"><i class="fas fa-plus"></i></div>
                         </div>
                         <div class="faq-answer">
-                            <p><?php echo get_default_faq_answer(2); ?></p>
+                            <p>Для граждан: освобождение от долгов, ограничения на получение кредитов в течение 5 лет, запрет на занятие руководящих должностей в течение 3 лет. Для юридических лиц: исключение из ЕГРЮЛ.</p>
                         </div>
                     </div>
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3><?php echo get_default_faq_question(3); ?></h3>
+                            <h3>При какой сумме долга можно банкротиться?</h3>
                             <div class="faq-toggle"><i class="fas fa-plus"></i></div>
                         </div>
                         <div class="faq-answer">
-                            <p><?php echo get_default_faq_answer(3); ?></p>
+                            <p>Для граждан сумма долга должна составлять не менее 500 000 рублей. Для юридических лиц - не менее 2 000 000 рублей.</p>
                         </div>
                     </div>
                 <?php endif; ?>
