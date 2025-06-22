@@ -532,6 +532,27 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
         'type' => 'textarea',
     ));
 
+    // Заголовок hero секции страницы "Услуги"
+    $wp_customize->add_setting('services_hero_title', array(
+        'default' => 'Наши услуги',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('services_hero_title', array(
+        'label' => __('Заголовок страницы "Услуги"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'text',
+    ));
+    // Подзаголовок hero секции страницы "Услуги"
+    $wp_customize->add_setting('services_hero_subtitle', array(
+        'default' => 'Комплексные решения в сфере банкротства физических и юридических лиц',
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+    $wp_customize->add_control('services_hero_subtitle', array(
+        'label' => __('Подзаголовок страницы "Услуги"', 'bankruptcy-law-pro'),
+        'section' => 'homepage_settings',
+        'type' => 'textarea',
+    ));
+
     // Секция "Футер"
     $wp_customize->add_section('footer_settings', array(
         'title' => __('Футер', 'bankruptcy-law-pro'),
