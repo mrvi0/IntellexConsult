@@ -85,6 +85,15 @@
                             </div>
                         <?php endif; ?>
                         
+                        <?php if (get_theme_mod('contact_phone_2')) : ?>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <p><a href="tel:<?php echo esc_attr(get_theme_mod('contact_phone_2')); ?>"><?php echo esc_html(get_theme_mod('contact_phone_2')); ?></a></p>
+                            </div>
+                        <?php endif; ?>
+
                         <?php if (get_theme_mod('contact_email')) : ?>
                             <div class="contact-item">
                                 <div class="contact-icon">
@@ -114,8 +123,24 @@
                     </p>
                     
                     <div class="footer-bottom-links">
-                        <a href="<?php echo get_permalink(get_page_by_path('politika-konfidentsialnosti')); ?>">Политика конфиденциальности</a>
-                        <a href="<?php echo get_permalink(get_page_by_path('usloviya-ispolzovaniya')); ?>">Условия использования</a>
+                        <?php
+                        $privacy_policy_page_id = get_theme_mod('privacy_policy_page');
+                        $terms_of_use_page_id = get_theme_mod('terms_of_use_page');
+
+                        if ($privacy_policy_page_id) {
+                            echo '<a href="' . esc_url(get_permalink($privacy_policy_page_id)) . '">' . esc_html(get_the_title($privacy_policy_page_id)) . '</a>';
+                        } else {
+                            // Fallback link
+                            echo '<a href="#">Политика конфиденциальности</a>';
+                        }
+
+                        if ($terms_of_use_page_id) {
+                            echo '<a href="' . esc_url(get_permalink($terms_of_use_page_id)) . '">' . esc_html(get_the_title($terms_of_use_page_id)) . '</a>';
+                        } else {
+                             // Fallback link
+                            echo '<a href="#">Условия использования</a>';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
