@@ -339,6 +339,36 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
         'section' => 'theme_updates_settings',
         'type' => 'password',
     ));
+
+    // Информация о текущей версии
+    $wp_customize->add_setting('theme_version_info', array(
+        'default' => '',
+        'sanitize_callback' => '__return_empty_string',
+    ));
+
+    $wp_customize->add_control('theme_version_info', array(
+        'label' => __('Текущая версия темы', 'bankruptcy-law-pro'),
+        'description' => wp_get_theme()->get('Version'),
+        'section' => 'theme_updates_settings',
+        'type' => 'hidden',
+    ));
+
+    // Кнопка проверки обновлений
+    $wp_customize->add_setting('check_updates_button', array(
+        'default' => '',
+        'sanitize_callback' => '__return_empty_string',
+    ));
+
+    $wp_customize->add_control('check_updates_button', array(
+        'label' => __('Проверить обновления', 'bankruptcy-law-pro'),
+        'description' => __('Нажмите кнопку ниже, чтобы принудительно проверить наличие обновлений для темы.', 'bankruptcy-law-pro'),
+        'section' => 'theme_updates_settings',
+        'type' => 'button',
+        'input_attrs' => array(
+            'class' => 'button button-primary',
+            'onclick' => 'window.open("' . admin_url('themes.php?page=intellex_consult_options') . '", "_blank");',
+        ),
+    ));
 }
 add_action('customize_register', 'bankruptcy_law_pro_customize_register');
 
@@ -717,7 +747,7 @@ function bankruptcy_law_pro_add_theme_options_page() {
     add_theme_page(
         'Настройки темы Intellex Consult', // Title of the page
         'Настройки темы',                  // Text to show on the menu
-        'edit_theme_options',              // Capability requirement
+        'manage_options',                  // Capability requirement (изменено с edit_theme_options)
         'intellex_consult_options',        // Menu slug
         'bankruptcy_law_pro_render_options_page' // Callback function
     );
@@ -726,9 +756,15 @@ add_action('admin_menu', 'bankruptcy_law_pro_add_theme_options_page');
 
 // Рендер страницы настроек
 function bankruptcy_law_pro_render_options_page() {
+    // Проверяем права доступа
+    if (!current_user_can('manage_options')) {
+        wp_die(__('У вас недостаточно прав для доступа к этой странице.'));
+    }
+    
     ?>
     <div class="wrap">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+        
         <div class="card">
             <h2 class="title">Проверка обновлений</h2>
             <p>Нажмите на кнопку ниже, чтобы принудительно проверить наличие обновлений для темы. WordPress также проверяет обновления автоматически дважды в день.</p>
@@ -744,6 +780,31 @@ function bankruptcy_law_pro_render_options_page() {
             
             <a href="<?php echo esc_url($check_url); ?>" class="button button-primary">Проверить обновления</a>
         </div>
+        
+        <div class="card">
+            <h2 class="title">Информация о теме</h2>
+            <?php
+            $theme = wp_get_theme();
+            ?>
+            <table class="form-table">
+                <tr>
+                    <th scope="row">Название темы:</th>
+                    <td><?php echo esc_html($theme->get('Name')); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Версия:</th>
+                    <td><?php echo esc_html($theme->get('Version')); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Автор:</th>
+                    <td><?php echo esc_html($theme->get('Author')); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">GitHub PAT настроен:</th>
+                    <td><?php echo get_theme_mod('github_pat') ? 'Да' : 'Нет'; ?></td>
+                </tr>
+            </table>
+        </div>
     </div>
     <?php
 }
@@ -754,6 +815,11 @@ function bankruptcy_law_pro_manual_update_check() {
         // Проверка nonce для безопасности
         if (!isset($_GET['intellex_nonce']) || !wp_verify_nonce($_GET['intellex_nonce'], 'check_updates_nonce')) {
             wp_die('Проверка безопасности не пройдена!');
+        }
+        
+        // Проверяем права доступа
+        if (!current_user_can('manage_options')) {
+            wp_die('У вас недостаточно прав для выполнения этого действия.');
         }
         
         // Удаляем кеш с информацией об обновлениях тем
