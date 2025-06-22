@@ -56,20 +56,35 @@
     }
 
     /**
-     * Плавная прокрутка к якорям
+     * Плавный скролл
      */
     function initSmoothScroll() {
         $('a[href^="#"]').on('click', function(e) {
             e.preventDefault();
             
-            const target = $(this.getAttribute('href'));
+            const href = $(this).attr('href');
+            
+            // Пропускаем пустые ссылки
+            if (href === '#') {
+                return;
+            }
+            
+            const target = $(href);
             if (target.length) {
-                const headerHeight = $('.header').outerHeight();
-                const targetPosition = target.offset().top - headerHeight;
+                const headerHeight = $('.header').outerHeight() || 0;
+                const targetPosition = target.offset().top - headerHeight - 20; // Дополнительный отступ
                 
                 $('html, body').animate({
                     scrollTop: targetPosition
-                }, 800, 'easeInOutQuart');
+                }, {
+                    duration: 800,
+                    easing: 'easeInOutCubic'
+                });
+                
+                // Обновляем URL без перезагрузки страницы
+                if (history.pushState) {
+                    history.pushState(null, null, href);
+                }
             }
         });
     }
@@ -88,10 +103,16 @@
             }
         });
 
-        $backToTop.on('click', function() {
+        $backToTop.on('click', function(e) {
+            e.preventDefault();
+            
+            // Плавный скролл наверх
             $('html, body').animate({
                 scrollTop: 0
-            }, 800, 'easeInOutQuart');
+            }, {
+                duration: 800,
+                easing: 'easeInOutCubic'
+            });
         });
     }
 
