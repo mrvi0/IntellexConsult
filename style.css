@@ -6,7 +6,7 @@ GitHub Theme URI: mrvi0/IntellexConsult
 Author: Mr Vi
 Author URI: https://t.me/b4dcat
 Description: Современная WordPress тема для юридических компаний, специализирующихся на банкротстве
-Version: 1.4.14
+Version: 1.4.15
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: intellex-consult
@@ -706,7 +706,7 @@ body {
 
 .faq-item.active .faq-toggle {
     background: #333333;
-    transform: rotate(45deg);
+    transform: rotate(135deg);
 }
 
 .faq-answer {
@@ -715,12 +715,12 @@ body {
     padding: 0 30px;
     color: #666666;
     line-height: 1.6;
-    transition: max-height 0.3s ease, padding 0.3s ease;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
 }
 
 .faq-item.active .faq-answer {
     max-height: 500px;
-    padding: 0 30px 25px;
+    padding: 25px 30px;
 }
 
 .faq-answer p {
@@ -1258,53 +1258,46 @@ textarea.form-control {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-.contact-icon {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #000000 0%, #333333 100%);
-    border-radius: 50%;
+.contact-card .contact-content {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin: 0;
-    font-size: 1.2rem;
-    color: #ffffff;
-    transition: all 0.3s ease;
+    gap: 20px;
+    width: 100%;
+}
+
+.contact-card .contact-icon {
     flex-shrink: 0;
 }
 
-.contact-card:hover .contact-icon {
-    transform: scale(1.1) rotate(5deg);
-    background: linear-gradient(135deg, #666666 0%, #333333 100%);
+.contact-card .contact-text {
+    text-align: left;
 }
 
-.contact-content h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 15px;
+.contact-card .contact-text h3 {
+    margin: 0 0 5px;
+    font-size: 1.2rem;
     color: #000000;
 }
 
-.contact-content p {
+.contact-card .contact-text p {
+    margin: 0;
     color: #666666;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.4;
 }
 
-.contact-content a {
-    color: #000000;
+.contact-card .contact-text a {
+    color: #666666;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-.contact-content a:hover {
-    color: #666666;
+.contact-card .contact-text a:hover {
+    color: #000000;
 }
 
 .social-card .social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
+    margin-top: 0;
 }
 
 .social-link {
@@ -2126,11 +2119,10 @@ textarea.form-control {
     margin-left: 18px;
     color: #007bff;
     font-size: 1.1rem;
-    transition: transform 0.3s;
+    transition: transform 0.3s ease;
 }
 .faq-item.active .faq-question i {
     transform: rotate(180deg);
-    color: #0056b3;
 }
 @media (max-width: 900px) {
     .services-grid, .benefits-grid {
