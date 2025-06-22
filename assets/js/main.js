@@ -10,7 +10,7 @@
     // Документ готов
     $(document).ready(function() {
         
-        // Инициализация всех функций
+        // Инициализация всех функций с проверками
         initMobileMenu();
         initSmoothScroll();
         initModal();
@@ -21,6 +21,10 @@
         initTooltips();
         initFAQ();
         initNumberAnimation();
+        initServiceFilter();
+        initTestimonialsSlider();
+        initParallax();
+        initFadeInElements();
         
     });
 
@@ -97,6 +101,9 @@
         const $modalTriggers = $('[data-modal="request"]');
         const $modalClose = $('.modal-close');
 
+        // Проверяем существование элементов
+        if (!$modal.length) return;
+
         $modalTriggers.on('click', function(e) {
             e.preventDefault();
             $modal.addClass('show');
@@ -129,6 +136,11 @@
      * Анимации при прокрутке
      */
     function initScrollAnimations() {
+        const $elements = $('.service-card, .team-member, .feature-item');
+        
+        // Проверяем существование элементов
+        if (!$elements.length) return;
+
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -143,7 +155,7 @@
         }, observerOptions);
 
         // Наблюдаем за элементами
-        $('.service-card, .team-member, .feature-item').each(function() {
+        $elements.each(function() {
             observer.observe(this);
         });
     }
@@ -217,42 +229,51 @@
      * Ленивая загрузка изображений
      */
     function initLazyLoading() {
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.remove('lazy');
-                        imageObserver.unobserve(img);
-                    }
-                });
-            });
+        const $images = $('img[data-src]');
+        
+        // Проверяем существование элементов
+        if (!$images.length) return;
 
-            $('img[data-src]').each(function() {
-                imageObserver.observe(this);
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
             });
-        }
+        });
+
+        $images.each(function() {
+            imageObserver.observe(this);
+        });
     }
 
     /**
      * Подсказки
      */
     function initTooltips() {
-        $('[data-tooltip]').on('mouseenter', function() {
-            const $this = $(this);
-            const tooltipText = $this.data('tooltip');
-            
-            const $tooltip = $('<div class="tooltip">' + tooltipText + '</div>');
-            $('body').append($tooltip);
-            
-            const rect = this.getBoundingClientRect();
-            $tooltip.css({
-                position: 'fixed',
-                top: rect.top - $tooltip.outerHeight() - 10,
-                left: rect.left + (rect.width / 2) - ($tooltip.outerWidth() / 2),
-                zIndex: 10000
-            });
+        const $tooltips = $('[data-tooltip]');
+        
+        // Проверяем существование элементов
+        if (!$tooltips.length) return;
+
+        $tooltips.on('mouseenter', function() {
+            const tooltip = $(this).data('tooltip');
+            $('<div class="tooltip">' + tooltip + '</div>')
+                .appendTo('body')
+                .css({
+                    position: 'absolute',
+                    left: $(this).offset().left + $(this).outerWidth() / 2,
+                    top: $(this).offset().top - 30,
+                    background: '#000',
+                    color: '#fff',
+                    padding: '5px 10px',
+                    borderRadius: '3px',
+                    fontSize: '12px',
+                    zIndex: 1000
+                });
         }).on('mouseleave', function() {
             $('.tooltip').remove();
         });
@@ -309,32 +330,31 @@
     }
 
     /**
-     * Анимация чисел при прокрутке (объединенная функция)
+     * Анимация чисел
      */
     function initNumberAnimation() {
+        const $counters = $('.number-counter, .counter');
+        
+        // Проверяем существование элементов
+        if (!$counters.length) return;
+
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const $counter = $(entry.target);
-                    const countTo = parseInt($counter.data('count'), 10);
+                    const target = parseInt($counter.data('count') || $counter.text());
                     const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
                     
-                    if (isNaN(countTo)) {
-                        return;
-                    }
-                    
-                    $({ countNum: 0 }).animate({
-                        countNum: countTo
-                    }, {
-                        duration: duration,
-                        easing: 'swing',
-                        step: function() {
-                            $counter.text(Math.floor(this.countNum));
-                        },
-                        complete: function() {
-                            $counter.text(this.countNum.toLocaleString('ru-RU'));
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
                         }
-                    });
+                        $counter.text(Math.floor(current));
+                    }, 16);
                     
                     observer.unobserve(entry.target);
                 }
@@ -343,7 +363,7 @@
             threshold: 0.5
         });
 
-        $('.number-counter, .counter').each(function() {
+        $counters.each(function() {
             observer.observe(this);
         });
     }
@@ -352,19 +372,25 @@
      * Фильтрация услуг
      */
     function initServiceFilter() {
-        $('.service-filter').on('click', function(e) {
+        const $filters = $('.service-filter');
+        const $serviceCards = $('.service-card');
+        
+        // Проверяем существование элементов
+        if (!$filters.length || !$serviceCards.length) return;
+
+        $filters.on('click', function(e) {
             e.preventDefault();
             
             const $this = $(this);
             const category = $this.data('category');
             
-            $('.service-filter').removeClass('active');
+            $filters.removeClass('active');
             $this.addClass('active');
             
             if (category === 'all') {
-                $('.service-card').show();
+                $serviceCards.show();
             } else {
-                $('.service-card').hide();
+                $serviceCards.hide();
                 $('.service-card[data-category="' + category + '"]').show();
             }
         });
@@ -374,26 +400,29 @@
      * Слайдер отзывов
      */
     function initTestimonialsSlider() {
-        if ($('.testimonials-slider').length) {
-            $('.testimonials-slider').slick({
-                dots: true,
-                arrows: false,
-                infinite: true,
-                speed: 500,
-                fade: true,
-                cssEase: 'linear',
-                autoplay: true,
-                autoplaySpeed: 5000,
-                responsive: [
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            dots: false
-                        }
+        const $slider = $('.testimonials-slider');
+        
+        // Проверяем существование слайдера и доступность Slick
+        if (!$slider.length || typeof $.fn.slick === 'undefined') return;
+
+        $slider.slick({
+            dots: true,
+            arrows: false,
+            infinite: true,
+            speed: 500,
+            fade: true,
+            cssEase: 'linear',
+            autoplay: true,
+            autoplaySpeed: 5000,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        dots: false
                     }
-                ]
-            });
-        }
+                }
+            ]
+        });
     }
 
     /**
