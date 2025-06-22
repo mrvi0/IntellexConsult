@@ -6,7 +6,7 @@ GitHub Theme URI: mrvi0/IntellexConsult
 Author: Mr Vi
 Author URI: https://t.me/b4dcat
 Description: Современная WordPress тема для юридических компаний, специализирующихся на банкротстве
-Version: 1.4.4
+Version: 1.4.6
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: intellex-consult
@@ -1173,8 +1173,8 @@ textarea.form-control {
 
 /* Стили для страницы контактов */
 .contact-hero {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    color: #ffffff;
+    background: #fff;
+    color: #222;
     text-align: center;
     padding: 120px 0 80px;
     position: relative;
@@ -1188,8 +1188,9 @@ textarea.form-control {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(120,120,120,0.08)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .contact-hero .hero-content {
@@ -1202,6 +1203,7 @@ textarea.form-control {
     font-weight: 700;
     margin-bottom: 20px;
     animation: fadeInUp 1s ease;
+    color: #222;
 }
 
 .contact-hero p {
@@ -1210,6 +1212,7 @@ textarea.form-control {
     max-width: 600px;
     margin: 0 auto;
     animation: fadeInUp 1s ease 0.2s both;
+    color: #444;
 }
 
 .contact-info-section {
@@ -1509,8 +1512,8 @@ textarea.form-control {
 
 /* Стили для страницы "О нас" */
 .about-hero {
-    background: linear-gradient(135deg, #000000 0%, #333333 100%);
-    color: #ffffff;
+    background: #fff;
+    color: #222;
     text-align: center;
     padding: 120px 0 80px;
     position: relative;
@@ -1524,8 +1527,9 @@ textarea.form-control {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(120,120,120,0.08)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .about-hero .hero-content {
@@ -1538,6 +1542,7 @@ textarea.form-control {
     font-weight: 700;
     margin-bottom: 20px;
     animation: fadeInUp 1s ease;
+    color: #222;
 }
 
 .about-hero p {
@@ -1546,6 +1551,7 @@ textarea.form-control {
     max-width: 600px;
     margin: 0 auto;
     animation: fadeInUp 1s ease 0.2s both;
+    color: #444;
 }
 
 .about-section {
@@ -1870,8 +1876,8 @@ textarea.form-control {
 
 /* Стили для страницы "Услуги" */
 .services-hero {
-    background: linear-gradient(135deg, #000000 0%, #333333 100%);
-    color: #ffffff;
+    background: #fff;
+    color: #222;
     text-align: center;
     padding: 120px 0 80px;
     position: relative;
@@ -1885,12 +1891,14 @@ textarea.form-control {
     font-size: 3.2rem;
     font-weight: 700;
     margin-bottom: 20px;
+    color: #222;
 }
 .services-hero p {
     font-size: 1.2rem;
     opacity: 0.9;
     max-width: 600px;
     margin: 0 auto;
+    color: #444;
 }
 .services-section {
     padding: 80px 0;
