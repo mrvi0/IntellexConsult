@@ -360,38 +360,47 @@ get_header(); ?>
                 <div class="contact-info">
                     <h3>Контактная информация</h3>
                     <div class="contact-details">
+                        <?php if (get_theme_mod('contact_address')) : ?>
                         <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div class="contact-text">
                                 <h4>Адрес</h4>
-                                <p><?php echo get_theme_mod('contact_address', 'г. Москва, ул. Тверская, д. 12, офис 342'); ?></p>
+                                <p><?php echo esc_html(get_theme_mod('contact_address')); ?></p>
                             </div>
                         </div>
+                        <?php endif; ?>
+
+                        <?php if (get_theme_mod('contact_phone')) : ?>
                         <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
+                            <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
                             <div class="contact-text">
                                 <h4>Телефон</h4>
-                                <p><a href="tel:<?php echo get_theme_mod('contact_phone', '+74951234567'); ?>"><?php echo get_theme_mod('contact_phone', '+7 (495) 123-45-67'); ?></a></p>
+                                <p><a href="tel:<?php echo esc_attr(get_theme_mod('contact_phone')); ?>"><?php echo esc_html(get_theme_mod('contact_phone')); ?></a></p>
                             </div>
                         </div>
+                        <?php endif; ?>
+
+                        <?php if (get_theme_mod('contact_email')) : ?>
                         <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                             <div class="contact-text">
                                 <h4>Email</h4>
-                                <p><a href="mailto:<?php echo get_theme_mod('contact_email', 'info@bankruptcy-law.ru'); ?>"><?php echo get_theme_mod('contact_email', 'info@bankruptcy-law.ru'); ?></a></p>
+                                <p><a href="mailto:<?php echo esc_attr(get_theme_mod('contact_email')); ?>"><?php echo esc_html(get_theme_mod('contact_email')); ?></a></p>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="contact-form">
                     <h3>Оставьте заявку</h3>
-                    <?php echo do_shortcode('[contact-form-7 id="1" title="Контактная форма"]'); ?>
+                    <?php
+                    $contact_form_shortcode = get_theme_mod('contact_form_shortcode');
+                    if ($contact_form_shortcode) {
+                        echo do_shortcode($contact_form_shortcode);
+                    } else {
+                        echo '<p>Ошибка: Контактная форма не найдена. Укажите шорткод в настройках темы.</p>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>
