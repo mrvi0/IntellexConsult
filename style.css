@@ -6,7 +6,7 @@ GitHub Theme URI: mrvi0/IntellexConsult
 Author: Mr Vi
 Author URI: https://t.me/b4dcat
 Description: Современная WordPress тема для юридических компаний, специализирующихся на банкротстве
-Version: 1.4.16
+Version: 1.4.17
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: intellex-consult
@@ -2116,13 +2116,12 @@ textarea.form-control {
     display: block;
 }
 .faq-question i {
-    margin-left: 18px;
-    color: #007bff;
+    color: #ffffff;
     font-size: 1.1rem;
     transition: transform 0.3s ease;
 }
 .faq-item.active .faq-question i {
-    transform: rotate(180deg);
+    transform: rotate(45deg);
 }
 @media (max-width: 900px) {
     .services-grid, .benefits-grid {

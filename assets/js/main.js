@@ -63,31 +63,44 @@
      * Плавный скролл
      */
     function initSmoothScroll() {
-        $('a[href^="#"]').on('click', function(e) {
-            const href = $(this).attr('href');
+        // Используем делегирование событий для всех ссылок, содержащих якорь
+        $(document).on('click', 'a[href*="#"]', function(e) {
+            // Убеждаемся, что ссылка ведет на текущую страницу
+            const currentPath = window.location.pathname.replace(/^\//, '');
+            const linkPath = this.pathname.replace(/^\//, '');
 
-            // Пропускаем ссылки, которые используются для других целей (например, табы)
-            if (!href || href === '#' || $(this).data('toggle')) {
+            if (currentPath !== linkPath) {
+                // Это ссылка на другую страницу, ничего не делаем
                 return;
             }
 
-            const target = $(href);
+            const hash = this.hash;
+            const $target = $(hash);
 
-            if (target.length) {
+            // Убеждаемся, что якорь существует на странице
+            if (hash && $target.length) {
+                // Игнорируем ссылки, используемые для других компонентов (модальные окна, табы и т.д.)
+                if ($(this).data('modal') || $(this).data('toggle') || $(this).data('slide')) {
+                    return;
+                }
+                
                 e.preventDefault();
+
                 const headerHeight = $('.header').outerHeight() || 0;
-                const targetPosition = target.offset().top - headerHeight - 20;
+                const targetPosition = $target.offset().top - headerHeight - 20; // Дополнительный отступ
 
                 $('html, body').stop().animate({
                     scrollTop: targetPosition
                 }, {
                     duration: 800,
-                    easing: 'swing' // Заменено на стандартную функцию
+                    easing: 'swing',
+                    complete: function() {
+                        // Обновляем URL в строке браузера
+                        if (history.pushState) {
+                            history.pushState(null, null, hash);
+                        }
+                    }
                 });
-
-                if (history.pushState) {
-                    history.pushState(null, null, href);
-                }
             }
         });
     }
