@@ -896,7 +896,7 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
 
         public function __construct() {
             $theme = wp_get_theme();
-            $this->theme_slug = 'intellex-consult-theme';
+            $this->theme_slug = $theme->get_stylesheet();
             $this->version = $theme->get('Version');
             $this->pat = get_theme_mod('github_pat');
             
@@ -905,6 +905,7 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
             $this->repo_name = 'mrvi0/IntellexConsult'; // Пример: 'owner/my-theme-repo'
 
             add_filter('pre_set_site_transient_update_themes', array($this, 'check_for_update'));
+            add_filter('upgrader_source_selection', array($this, 'rename_github_zip'), 10, 4);
             
             // Добавляем отладку
             add_action('admin_notices', array($this, 'debug_notice'));
@@ -1077,6 +1078,24 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
             }
             
             return $release;
+        }
+
+        // Хук для переименования папки из архива GitHub
+        public function rename_github_zip($source, $remote_source, $upgrader, $hook_extra = null) {
+            
+            // Проверяем, что это обновление нашей темы
+            if ( isset($hook_extra['theme']) && $hook_extra['theme'] === $this->theme_slug ) {
+                
+                $source_path = $source;
+                $new_source_path = trailingslashit(dirname($source_path)) . $this->theme_slug;
+                
+                // Переименовываем папку
+                if (rename($source_path, $new_source_path)) {
+                    return $new_source_path;
+                }
+            }
+            
+            return $source;
         }
 
         // Отладочное уведомление
