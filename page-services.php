@@ -8,6 +8,9 @@
 // Отладочная информация
 if (current_user_can('administrator')) {
     echo '<!-- Шаблон страницы услуг загружен -->';
+    echo '<!-- Текущий шаблон: ' . get_page_template_slug() . ' -->';
+    echo '<!-- ID страницы: ' . get_the_ID() . ' -->';
+    echo '<!-- Заголовок страницы: ' . get_the_title() . ' -->';
 }
 
 get_header(); ?>
