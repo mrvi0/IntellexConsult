@@ -830,7 +830,7 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
 
         public function __construct() {
             $theme = wp_get_theme();
-            $this->theme_slug = $theme->get_stylesheet();
+            $this->theme_slug = 'intellex-consult-theme';
             $this->version = $theme->get('Version');
             $this->pat = get_theme_mod('github_pat');
             
@@ -911,7 +911,11 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
             $args = ['timeout' => 15];
             
             if (!empty($this->pat)) {
-                $args['headers'] = ['Authorization' => "token {$this->pat}"];
+                $args['headers'] = [
+                    'Authorization' => "token {$this->pat}",
+                    'Accept' => 'application/vnd.github.v3+json',
+                    'User-Agent' => 'Intellex-Consult-Theme-Updater'
+                ];
             }
 
             if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -928,19 +932,32 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
             }
 
             $response_code = wp_remote_retrieve_response_code($response);
+            $response_body = wp_remote_retrieve_body($response);
+            
             if ($response_code !== 200) {
                 if (defined('WP_DEBUG') && WP_DEBUG) {
                     error_log('Intellex Consult Updater: HTTP Error: ' . $response_code);
-                    error_log('Intellex Consult Updater: Response body: ' . wp_remote_retrieve_body($response));
+                    error_log('Intellex Consult Updater: Response body: ' . $response_body);
                 }
+                
+                // Проверяем конкретные ошибки
+                if ($response_code === 404) {
+                    error_log('Intellex Consult Updater: Repository not found. Check repository name: ' . $this->repo_name);
+                } elseif ($response_code === 401) {
+                    error_log('Intellex Consult Updater: Unauthorized. Check PAT token permissions.');
+                } elseif ($response_code === 403) {
+                    error_log('Intellex Consult Updater: Forbidden. Check PAT token scope (needs "repo" permission).');
+                }
+                
                 return false;
             }
 
-            $release = json_decode(wp_remote_retrieve_body($response));
+            $release = json_decode($response_body);
 
             if (empty($release) || !isset($release->tag_name) || !isset($release->zipball_url)) {
                 if (defined('WP_DEBUG') && WP_DEBUG) {
                     error_log('Intellex Consult Updater: Invalid release data');
+                    error_log('Intellex Consult Updater: Response: ' . $response_body);
                 }
                 return false;
             }
@@ -962,19 +979,59 @@ if (!class_exists('Bankruptcy_Law_Pro_GitHub_Updater')) {
                 echo '<h4>Отладочная информация Intellex Consult Updater:</h4>';
                 echo '<p><strong>Тема:</strong> ' . esc_html($theme->get('Name')) . '</p>';
                 echo '<p><strong>Текущая версия:</strong> ' . esc_html($theme->get('Version')) . '</p>';
-                echo '<p><strong>Slug темы:</strong> ' . esc_html($theme->get_stylesheet()) . '</p>';
+                echo '<p><strong>Slug темы (фактический):</strong> ' . esc_html($theme->get_stylesheet()) . '</p>';
+                echo '<p><strong>Slug темы (используемый):</strong> ' . esc_html($this->theme_slug) . '</p>';
                 echo '<p><strong>Репозиторий:</strong> ' . esc_html($this->repo_name) . '</p>';
                 echo '<p><strong>PAT настроен:</strong> ' . (!empty($pat) ? 'Да (' . substr($pat, 0, 8) . '...)' : 'Нет') . '</p>';
                 
-                // Проверяем последний релиз
+                // Проверяем последний релиз с подробной диагностикой
                 if (!empty($pat)) {
-                    $remote_release = $this->_get_latest_github_release();
-                    if ($remote_release) {
-                        $remote_version = ltrim($remote_release->tag_name, 'v');
-                        echo '<p><strong>Последняя версия на GitHub:</strong> ' . esc_html($remote_version) . '</p>';
-                        echo '<p><strong>Обновление доступно:</strong> ' . (version_compare($theme->get('Version'), $remote_version, '<') ? 'Да' : 'Нет') . '</p>';
+                    echo '<hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">';
+                    echo '<h5>Диагностика GitHub API:</h5>';
+                    
+                    $url = "https://api.github.com/repos/{$this->repo_name}/releases/latest";
+                    echo '<p><strong>URL запроса:</strong> ' . esc_html($url) . '</p>';
+                    
+                    $args = ['timeout' => 15];
+                    $args['headers'] = ['Authorization' => "token {$pat}"];
+                    
+                    $response = wp_remote_get($url, $args);
+                    
+                    if (is_wp_error($response)) {
+                        echo '<p><strong>Ошибка WordPress:</strong> ' . esc_html($response->get_error_message()) . '</p>';
                     } else {
-                        echo '<p><strong>Последняя версия на GitHub:</strong> Не удалось получить</p>';
+                        $response_code = wp_remote_retrieve_response_code($response);
+                        $response_body = wp_remote_retrieve_body($response);
+                        $response_headers = wp_remote_retrieve_headers($response);
+                        
+                        echo '<p><strong>HTTP код ответа:</strong> ' . esc_html($response_code) . '</p>';
+                        echo '<p><strong>Заголовки ответа:</strong></p>';
+                        echo '<pre style="background: #f5f5f5; padding: 10px; font-size: 12px; overflow-x: auto;">';
+                        foreach ($response_headers as $header => $value) {
+                            echo esc_html($header . ': ' . $value) . "\n";
+                        }
+                        echo '</pre>';
+                        
+                        if ($response_code !== 200) {
+                            echo '<p><strong>Тело ответа (ошибка):</strong></p>';
+                            echo '<pre style="background: #f5f5f5; padding: 10px; font-size: 12px; overflow-x: auto;">';
+                            echo esc_html($response_body);
+                            echo '</pre>';
+                        } else {
+                            $release = json_decode($response_body);
+                            if ($release && isset($release->tag_name)) {
+                                $remote_version = ltrim($release->tag_name, 'v');
+                                echo '<p><strong>Последняя версия на GitHub:</strong> ' . esc_html($remote_version) . '</p>';
+                                echo '<p><strong>Обновление доступно:</strong> ' . (version_compare($theme->get('Version'), $remote_version, '<') ? 'Да' : 'Нет') . '</p>';
+                                echo '<p><strong>URL релиза:</strong> <a href="' . esc_url($release->html_url) . '" target="_blank">' . esc_html($release->html_url) . '</a></p>';
+                            } else {
+                                echo '<p><strong>Ошибка парсинга JSON:</strong> Неверный формат ответа</p>';
+                                echo '<p><strong>Тело ответа:</strong></p>';
+                                echo '<pre style="background: #f5f5f5; padding: 10px; font-size: 12px; overflow-x: auto;">';
+                                echo esc_html($response_body);
+                                echo '</pre>';
+                            }
+                        }
                     }
                 }
                 
