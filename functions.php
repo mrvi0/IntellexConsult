@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
  */
 function bankruptcy_law_pro_setup() {
     // Поддержка переводов
-    load_theme_textdomain('bankruptcy-law-pro', get_template_directory() . '/languages');
+    load_theme_textdomain('intellex-consult', get_template_directory() . '/languages');
     
     // Поддержка автоматических ссылок на RSS
     add_theme_support('automatic-feed-links');
@@ -63,8 +63,8 @@ function bankruptcy_law_pro_setup() {
     
     // Регистрация меню
     register_nav_menus(array(
-        'primary' => esc_html__('Главное меню', 'bankruptcy-law-pro'),
-        'footer' => esc_html__('Меню футера', 'bankruptcy-law-pro'),
+        'primary' => esc_html__('Главное меню', 'intellex-consult'),
+        'footer' => esc_html__('Меню футера', 'intellex-consult'),
     ));
     
     // Поддержка широкого и полного контента
@@ -81,10 +81,10 @@ add_action('after_setup_theme', 'bankruptcy_law_pro_setup');
  */
 function bankruptcy_law_pro_scripts() {
     // Основные стили темы
-    wp_enqueue_style('bankruptcy-law-pro-style', get_stylesheet_uri(), array(), '1.1.0');
+    wp_enqueue_style('intellex-consult-style', get_stylesheet_uri(), array(), '1.1.0');
     
     // Дополнительные стили
-    wp_enqueue_style('bankruptcy-law-pro-main-style', get_template_directory_uri() . '/assets/css/main.css', array('bankruptcy-law-pro-style'), '1.1.0');
+    wp_enqueue_style('intellex-consult-main-style', get_template_directory_uri() . '/assets/css/main.css', array('intellex-consult-style'), '1.1.0');
     
     // Google Fonts
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap', array(), null);
@@ -94,7 +94,7 @@ function bankruptcy_law_pro_scripts() {
     
     // Основные скрипты
     $theme_version = wp_get_theme()->get('Version');
-    wp_enqueue_script('bankruptcy-law-pro-main-script', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), $theme_version, true);
+    wp_enqueue_script('intellex-consult-main-script', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), $theme_version, true);
     
     // Комментарии
     if (is_singular() && comments_open() && get_option('thread_comments')) {
@@ -108,9 +108,9 @@ add_action('wp_enqueue_scripts', 'bankruptcy_law_pro_scripts');
  */
 function bankruptcy_law_pro_widgets_init() {
     register_sidebar(array(
-        'name'          => esc_html__('Боковая панель', 'bankruptcy-law-pro'),
+        'name'          => esc_html__('Боковая панель', 'intellex-consult'),
         'id'            => 'sidebar-1',
-        'description'   => esc_html__('Добавьте виджеты сюда.', 'bankruptcy-law-pro'),
+        'description'   => esc_html__('Добавьте виджеты сюда.', 'intellex-consult'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h2 class="widget-title">',
@@ -118,9 +118,9 @@ function bankruptcy_law_pro_widgets_init() {
     ));
     
     register_sidebar(array(
-        'name'          => esc_html__('Футер 1', 'bankruptcy-law-pro'),
+        'name'          => esc_html__('Футер 1', 'intellex-consult'),
         'id'            => 'footer-1',
-        'description'   => esc_html__('Виджеты для первой колонки футера.', 'bankruptcy-law-pro'),
+        'description'   => esc_html__('Виджеты для первой колонки футера.', 'intellex-consult'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '<h3 class="widget-title">',
@@ -128,9 +128,9 @@ function bankruptcy_law_pro_widgets_init() {
     ));
     
     register_sidebar(array(
-        'name'          => esc_html__('Футер 2', 'bankruptcy-law-pro'),
+        'name'          => esc_html__('Футер 2', 'intellex-consult'),
         'id'            => 'footer-2',
-        'description'   => esc_html__('Виджеты для второй колонки футера.', 'bankruptcy-law-pro'),
+        'description'   => esc_html__('Виджеты для второй колонки футера.', 'intellex-consult'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '<h3 class="widget-title">',
@@ -138,9 +138,9 @@ function bankruptcy_law_pro_widgets_init() {
     ));
     
     register_sidebar(array(
-        'name'          => esc_html__('Футер 3', 'bankruptcy-law-pro'),
+        'name'          => esc_html__('Футер 3', 'intellex-consult'),
         'id'            => 'footer-3',
-        'description'   => esc_html__('Виджеты для третьей колонки футера.', 'bankruptcy-law-pro'),
+        'description'   => esc_html__('Виджеты для третьей колонки футера.', 'intellex-consult'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '<h3 class="widget-title">',
@@ -155,7 +155,7 @@ add_action('widgets_init', 'bankruptcy_law_pro_widgets_init');
 function bankruptcy_law_pro_customize_register($wp_customize) {
     // Секция "Общие настройки"
     $wp_customize->add_section('general_settings', array(
-        'title' => __('Общие настройки', 'bankruptcy-law-pro'),
+        'title' => __('Общие настройки', 'intellex-consult'),
         'priority' => 30,
     ));
     
@@ -166,7 +166,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'site_logo', array(
-        'label' => __('Логотип сайта', 'bankruptcy-law-pro'),
+        'label' => __('Логотип сайта', 'intellex-consult'),
         'section' => 'general_settings',
         'settings' => 'site_logo',
     )));
@@ -178,7 +178,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'site_favicon', array(
-        'label' => __('Favicon', 'bankruptcy-law-pro'),
+        'label' => __('Favicon', 'intellex-consult'),
         'section' => 'general_settings',
         'settings' => 'site_favicon',
     )));
@@ -190,14 +190,14 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('site_description', array(
-        'label' => __('Описание сайта', 'bankruptcy-law-pro'),
+        'label' => __('Описание сайта', 'intellex-consult'),
         'section' => 'general_settings',
         'type' => 'textarea',
     ));
     
     // Секция "Главная страница"
     $wp_customize->add_section('homepage_settings', array(
-        'title' => __('Главная страница', 'bankruptcy-law-pro'),
+        'title' => __('Главная страница', 'intellex-consult'),
         'priority' => 30,
     ));
 
@@ -208,7 +208,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('hero_title', array(
-        'label' => __('Заголовок Hero секции', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок Hero секции', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -219,7 +219,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('hero_subtitle', array(
-        'label' => __('Подзаголовок Hero секции', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок Hero секции', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'textarea',
     ));
@@ -231,7 +231,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('about_title', array(
-        'label' => __('Заголовок раздела "О нас"', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок раздела "О нас"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -242,7 +242,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('about_subtitle', array(
-        'label' => __('Подзаголовок раздела "О нас"', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок раздела "О нас"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -257,8 +257,8 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('about_text', array(
-        'label' => __('Текст раздела "О нас"', 'bankruptcy-law-pro'),
-        'description' => __('Основной текст, который будет отображаться в разделе "О нас"', 'bankruptcy-law-pro'),
+        'label' => __('Текст раздела "О нас"', 'intellex-consult'),
+        'description' => __('Основной текст, который будет отображаться в разделе "О нас"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'textarea',
         'input_attrs' => array(
@@ -272,8 +272,8 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'about_image', array(
-        'label' => __('Изображение раздела "О нас"', 'bankruptcy-law-pro'),
-        'description' => __('Загрузите изображение для раздела "О нас". Рекомендуемый размер: 600x400px', 'bankruptcy-law-pro'),
+        'label' => __('Изображение раздела "О нас"', 'intellex-consult'),
+        'description' => __('Загрузите изображение для раздела "О нас". Рекомендуемый размер: 600x400px', 'intellex-consult'),
         'section' => 'homepage_settings',
     )));
 
@@ -284,7 +284,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('services_title', array(
-        'label' => __('Заголовок раздела "Услуги"', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок раздела "Услуги"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -295,7 +295,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('services_subtitle', array(
-        'label' => __('Подзаголовок раздела "Услуги"', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок раздела "Услуги"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -307,7 +307,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('features_title', array(
-        'label' => __('Заголовок раздела "Преимущества"', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок раздела "Преимущества"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -318,7 +318,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('features_subtitle', array(
-        'label' => __('Подзаголовок раздела "Преимущества"', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок раздела "Преимущества"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -330,7 +330,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('team_title', array(
-        'label' => __('Заголовок раздела "Команда"', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок раздела "Команда"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -341,7 +341,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('team_subtitle', array(
-        'label' => __('Подзаголовок раздела "Команда"', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок раздела "Команда"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -353,7 +353,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('testimonials_title', array(
-        'label' => __('Заголовок раздела "Отзывы"', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок раздела "Отзывы"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -364,7 +364,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('testimonials_subtitle', array(
-        'label' => __('Подзаголовок раздела "Отзывы"', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок раздела "Отзывы"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -376,7 +376,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('contact_title', array(
-        'label' => __('Заголовок раздела "Контакты"', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок раздела "Контакты"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -387,14 +387,14 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('contact_subtitle', array(
-        'label' => __('Подзаголовок раздела "Контакты"', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок раздела "Контакты"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
 
     // Секция "Контакты"
     $wp_customize->add_section('contact_settings', array(
-        'title' => __('Контакты', 'bankruptcy-law-pro'),
+        'title' => __('Контакты', 'intellex-consult'),
         'priority' => 40,
     ));
     
@@ -405,7 +405,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('contact_address', array(
-        'label' => __('Адрес', 'bankruptcy-law-pro'),
+        'label' => __('Адрес', 'intellex-consult'),
         'section' => 'contact_settings',
         'type' => 'text',
     ));
@@ -417,7 +417,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('contact_phone', array(
-        'label' => __('Телефон', 'bankruptcy-law-pro'),
+        'label' => __('Телефон', 'intellex-consult'),
         'section' => 'contact_settings',
         'type' => 'text',
     ));
@@ -429,7 +429,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('contact_email', array(
-        'label' => __('Email', 'bankruptcy-law-pro'),
+        'label' => __('Email', 'intellex-consult'),
         'section' => 'contact_settings',
         'type' => 'email',
     ));
@@ -441,7 +441,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('contact_working_hours', array(
-        'label' => __('Часы работы', 'bankruptcy-law-pro'),
+        'label' => __('Часы работы', 'intellex-consult'),
         'section' => 'contact_settings',
         'type' => 'text',
     ));
@@ -453,7 +453,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('contact_phone_2', array(
-        'label' => __('Второй номер телефона (необязательно)', 'bankruptcy-law-pro'),
+        'label' => __('Второй номер телефона (необязательно)', 'intellex-consult'),
         'section' => 'contact_settings',
         'type' => 'text',
     ));
@@ -465,9 +465,9 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('contact_form_shortcode', array(
-        'label' => __('Шорткод контактной формы', 'bankruptcy-law-pro'),
+        'label' => __('Шорткод контактной формы', 'intellex-consult'),
         'section' => 'contact_settings',
-        'description' => __('Вставьте сюда шорткод, например [contact-form-7 id="123" title="Контактная форма"]', 'bankruptcy-law-pro'),
+        'description' => __('Вставьте сюда шорткод, например [contact-form-7 id="123" title="Контактная форма"]', 'intellex-consult'),
         'type' => 'text',
     ));
 
@@ -478,7 +478,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('contact_hero_title', array(
-        'label' => __('Заголовок страницы контактов', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок страницы контактов', 'intellex-consult'),
         'section' => 'contact_settings',
         'type' => 'text',
     ));
@@ -490,7 +490,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('contact_hero_subtitle', array(
-        'label' => __('Подзаголовок страницы контактов', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок страницы контактов', 'intellex-consult'),
         'section' => 'contact_settings',
         'type' => 'textarea',
     ));
@@ -502,9 +502,9 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('contact_map_embed', array(
-        'label' => __('Код карты (iframe)', 'bankruptcy-law-pro'),
+        'label' => __('Код карты (iframe)', 'intellex-consult'),
         'section' => 'contact_settings',
-        'description' => __('Вставьте код карты Google Maps или Яндекс.Карт', 'bankruptcy-law-pro'),
+        'description' => __('Вставьте код карты Google Maps или Яндекс.Карт', 'intellex-consult'),
         'type' => 'textarea',
     ));
 
@@ -515,7 +515,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('about_hero_title', array(
-        'label' => __('Заголовок страницы "О нас"', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок страницы "О нас"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -527,7 +527,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('about_hero_subtitle', array(
-        'label' => __('Подзаголовок страницы "О нас"', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок страницы "О нас"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'textarea',
     ));
@@ -538,7 +538,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('services_hero_title', array(
-        'label' => __('Заголовок страницы "Услуги"', 'bankruptcy-law-pro'),
+        'label' => __('Заголовок страницы "Услуги"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'text',
     ));
@@ -548,14 +548,14 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
         'sanitize_callback' => 'sanitize_textarea_field',
     ));
     $wp_customize->add_control('services_hero_subtitle', array(
-        'label' => __('Подзаголовок страницы "Услуги"', 'bankruptcy-law-pro'),
+        'label' => __('Подзаголовок страницы "Услуги"', 'intellex-consult'),
         'section' => 'homepage_settings',
         'type' => 'textarea',
     ));
 
     // Секция "Футер"
     $wp_customize->add_section('footer_settings', array(
-        'title' => __('Футер', 'bankruptcy-law-pro'),
+        'title' => __('Футер', 'intellex-consult'),
         'priority' => 50,
     ));
 
@@ -566,7 +566,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('privacy_policy_page', array(
-        'label'       => __('Страница Политики конфиденциальности', 'bankruptcy-law-pro'),
+        'label'       => __('Страница Политики конфиденциальности', 'intellex-consult'),
         'section'     => 'footer_settings',
         'type'        => 'dropdown-pages',
         'settings'    => 'privacy_policy_page',
@@ -580,7 +580,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('terms_of_use_page', array(
-        'label'       => __('Страница Условий использования', 'bankruptcy-law-pro'),
+        'label'       => __('Страница Условий использования', 'intellex-consult'),
         'section'     => 'footer_settings',
         'type'        => 'dropdown-pages',
         'settings'    => 'terms_of_use_page',
@@ -594,7 +594,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('social_vk', array(
-        'label' => __('VK', 'bankruptcy-law-pro'),
+        'label' => __('VK', 'intellex-consult'),
         'section' => 'social_settings',
         'type' => 'url',
     ));
@@ -606,7 +606,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('social_telegram', array(
-        'label' => __('Telegram', 'bankruptcy-law-pro'),
+        'label' => __('Telegram', 'intellex-consult'),
         'section' => 'social_settings',
         'type' => 'url',
     ));
@@ -618,7 +618,7 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_control('social_whatsapp', array(
-        'label' => __('WhatsApp', 'bankruptcy-law-pro'),
+        'label' => __('WhatsApp', 'intellex-consult'),
         'section' => 'social_settings',
         'type' => 'url',
     ));
@@ -674,10 +674,10 @@ function bankruptcy_law_pro_custom_post_types() {
     // Услуги
     register_post_type('service', array(
         'labels' => array(
-            'name' => __('Услуги', 'bankruptcy-law-pro'),
-            'singular_name' => __('Услуга', 'bankruptcy-law-pro'),
-            'add_new_item' => __('Добавить новую услугу', 'bankruptcy-law-pro'),
-            'edit_item' => __('Редактировать услугу', 'bankruptcy-law-pro'),
+            'name' => __('Услуги', 'intellex-consult'),
+            'singular_name' => __('Услуга', 'intellex-consult'),
+            'add_new_item' => __('Добавить новую услугу', 'intellex-consult'),
+            'edit_item' => __('Редактировать услугу', 'intellex-consult'),
         ),
         'public' => true,
         'menu_icon' => 'dashicons-briefcase',
@@ -689,16 +689,16 @@ function bankruptcy_law_pro_custom_post_types() {
     // FAQ
     register_post_type('faq', array(
         'labels' => array(
-            'name' => __('FAQ', 'bankruptcy-law-pro'),
-            'singular_name' => __('Вопрос', 'bankruptcy-law-pro'),
-            'add_new' => __('Добавить новый', 'bankruptcy-law-pro'),
-            'add_new_item' => __('Добавить новый вопрос', 'bankruptcy-law-pro'),
-            'edit_item' => __('Редактировать вопрос', 'bankruptcy-law-pro'),
-            'new_item' => __('Новый вопрос', 'bankruptcy-law-pro'),
-            'view_item' => __('Посмотреть вопрос', 'bankruptcy-law-pro'),
-            'search_items' => __('Искать в FAQ', 'bankruptcy-law-pro'),
-            'not_found' => __('Вопросов не найдено', 'bankruptcy-law-pro'),
-            'not_found_in_trash' => __('В корзине вопросов не найдено', 'bankruptcy-law-pro'),
+            'name' => __('FAQ', 'intellex-consult'),
+            'singular_name' => __('Вопрос', 'intellex-consult'),
+            'add_new' => __('Добавить новый', 'intellex-consult'),
+            'add_new_item' => __('Добавить новый вопрос', 'intellex-consult'),
+            'edit_item' => __('Редактировать вопрос', 'intellex-consult'),
+            'new_item' => __('Новый вопрос', 'intellex-consult'),
+            'view_item' => __('Посмотреть вопрос', 'intellex-consult'),
+            'search_items' => __('Искать в FAQ', 'intellex-consult'),
+            'not_found' => __('Вопросов не найдено', 'intellex-consult'),
+            'not_found_in_trash' => __('В корзине вопросов не найдено', 'intellex-consult'),
         ),
         'public' => true,
         'menu_icon' => 'dashicons-editor-help',
@@ -830,7 +830,7 @@ add_action('save_post', 'bankruptcy_law_pro_save_testimonial_meta');
 function bankruptcy_law_pro_add_service_meta_boxes() {
     add_meta_box(
         'service_details',
-        __('Детали услуги', 'bankruptcy-law-pro'),
+        __('Детали услуги', 'intellex-consult'),
         'bankruptcy_law_pro_service_meta_box_callback',
         'service',
         'normal',
@@ -845,12 +845,12 @@ function bankruptcy_law_pro_service_meta_box_callback($post) {
     $link = get_post_meta($post->ID, '_service_link', true);
     $icon = get_post_meta($post->ID, '_service_icon', true);
 
-    echo '<p><label for="service_link">' . __('Ссылка на страницу услуги', 'bankruptcy-law-pro') . '</label>';
+    echo '<p><label for="service_link">' . __('Ссылка на страницу услуги', 'intellex-consult') . '</label>';
     echo '<input type="url" id="service_link" name="service_link" value="' . esc_url($link) . '" size="25" /></p>';
 
-    echo '<p><label for="service_icon">' . __('Класс иконки (Font Awesome)', 'bankruptcy-law-pro') . '</label>';
+    echo '<p><label for="service_icon">' . __('Класс иконки (Font Awesome)', 'intellex-consult') . '</label>';
     echo '<input type="text" id="service_icon" name="service_icon" value="' . esc_attr($icon) . '" size="25" placeholder="fas fa-briefcase" />';
-    echo '<p class="description">' . __('Например: ', 'bankruptcy-law-pro') . '<code>fas fa-money-bill-wave</code></p>';
+    echo '<p class="description">' . __('Например: ', 'intellex-consult') . '<code>fas fa-money-bill-wave</code></p>';
 }
 
 function bankruptcy_law_pro_save_service_meta($post_id) {

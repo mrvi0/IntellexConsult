@@ -2,7 +2,7 @@
 /**
  * Шаблон страницы "Услуги"
  * 
- * @package Bankruptcy_Law_Pro
+ * @package intellex-consult
  */
 
 get_header(); ?>
