@@ -2,7 +2,7 @@
 /**
  * Функции темы Bankruptcy Law Pro
  * 
- * @package Bankruptcy_Law_Pro
+ * @package intellex-consult
  */
 
 // Предотвращение прямого доступа

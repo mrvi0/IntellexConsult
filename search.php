@@ -2,7 +2,7 @@
 /**
  * Шаблон для отображения результатов поиска
  * 
- * @package Bankruptcy_Law_Pro
+ * @package intellex-consult
  */
 
 get_header(); ?>
@@ -13,7 +13,7 @@ get_header(); ?>
             <!-- Заголовок поиска -->
             <header class="search-header">
                 <h1 class="search-title">
-                    <?php printf(esc_html__('Результаты поиска для: %s', 'bankruptcy-law-pro'), '<span>' . get_search_query() . '</span>'); ?>
+                    <?php printf(esc_html__('Результаты поиска для: %s', 'intellex-consult'), '<span>' . get_search_query() . '</span>'); ?>
                 </h1>
                 
                 <!-- Форма поиска -->
@@ -25,7 +25,7 @@ get_header(); ?>
             <?php if (have_posts()) : ?>
                 <div class="search-results">
                     <p class="results-count">
-                        <?php printf(esc_html__('Найдено результатов: %d', 'bankruptcy-law-pro'), $wp_query->found_posts); ?>
+                        <?php printf(esc_html__('Найдено результатов: %d', 'intellex-consult'), $wp_query->found_posts); ?>
                     </p>
                     
                     <div class="posts-grid">

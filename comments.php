@@ -2,7 +2,7 @@
 /**
  * Шаблон для отображения комментариев
  * 
- * @package Bankruptcy_Law_Pro
+ * @package intellex-consult
  */
 
 // Если пост защищен паролем и пароль не введен, не показываем комментарии
@@ -20,7 +20,7 @@ if (post_password_required()) {
             if ('1' === $comments_number) {
                 printf(
                     /* translators: %s: post title */
-                    esc_html__('Один комментарий к "%s"', 'bankruptcy-law-pro'),
+                    esc_html__('Один комментарий к "%s"', 'intellex-consult'),
                     '<span>' . wp_kses_post(get_the_title()) . '</span>'
                 );
             } else {
@@ -31,7 +31,7 @@ if (post_password_required()) {
                         '%1$s комментариев к "%2$s"',
                         $comments_number,
                         'comments title',
-                        'bankruptcy-law-pro'
+                        'intellex-consult'
                     )),
                     number_format_i18n($comments_number),
                     '<span>' . wp_kses_post(get_the_title()) . '</span>'
@@ -57,7 +57,7 @@ if (post_password_required()) {
         // Если комментарии закрыты и есть комментарии, показываем сообщение
         if (!comments_open()) :
         ?>
-            <p class="no-comments"><?php esc_html_e('Комментарии закрыты.', 'bankruptcy-law-pro'); ?></p>
+            <p class="no-comments"><?php esc_html_e('Комментарии закрыты.', 'intellex-consult'); ?></p>
         <?php
         endif;
     endif;
@@ -68,12 +68,12 @@ if (post_password_required()) {
         'title_reply_to' => 'Ответить %s',
         'cancel_reply_link' => 'Отменить ответ',
         'label_submit' => 'Отправить комментарий',
-        'comment_field' => '<p class="comment-form-comment"><label for="comment">' . _x('Комментарий', 'noun', 'bankruptcy-law-pro') . '</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" placeholder="Ваш комментарий..."></textarea></p>',
-        'comment_notes_before' => '<p class="comment-notes"><span id="email-notes">' . __('Ваш email не будет опубликован.', 'bankruptcy-law-pro') . '</span></p>',
+        'comment_field' => '<p class="comment-form-comment"><label for="comment">' . _x('Комментарий', 'noun', 'intellex-consult') . '</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" placeholder="Ваш комментарий..."></textarea></p>',
+        'comment_notes_before' => '<p class="comment-notes"><span id="email-notes">' . __('Ваш email не будет опубликован.', 'intellex-consult') . '</span></p>',
         'fields' => array(
-            'author' => '<p class="comment-form-author"><label for="author">' . __('Имя', 'bankruptcy-law-pro') . ' <span class="required">*</span></label><input id="author" name="author" type="text" value="' . esc_attr($commenter['comment_author']) . '" size="30" aria-required="true" placeholder="Ваше имя" /></p>',
-            'email' => '<p class="comment-form-email"><label for="email">' . __('Email', 'bankruptcy-law-pro') . ' <span class="required">*</span></label><input id="email" name="email" type="text" value="' . esc_attr($commenter['comment_author_email']) . '" size="30" aria-required="true" placeholder="Ваш email" /></p>',
-            'url' => '<p class="comment-form-url"><label for="url">' . __('Сайт', 'bankruptcy-law-pro') . '</label><input id="url" name="url" type="text" value="' . esc_attr($commenter['comment_author_url']) . '" size="30" placeholder="Ваш сайт (необязательно)" /></p>',
+            'author' => '<p class="comment-form-author"><label for="author">' . __('Имя', 'intellex-consult') . ' <span class="required">*</span></label><input id="author" name="author" type="text" value="' . esc_attr($commenter['comment_author']) . '" size="30" aria-required="true" placeholder="Ваше имя" /></p>',
+            'email' => '<p class="comment-form-email"><label for="email">' . __('Email', 'intellex-consult') . ' <span class="required">*</span></label><input id="email" name="email" type="text" value="' . esc_attr($commenter['comment_author_email']) . '" size="30" aria-required="true" placeholder="Ваш email" /></p>',
+            'url' => '<p class="comment-form-url"><label for="url">' . __('Сайт', 'intellex-consult') . '</label><input id="url" name="url" type="text" value="' . esc_attr($commenter['comment_author_url']) . '" size="30" placeholder="Ваш сайт (необязательно)" /></p>',
         ),
     ));
     ?>

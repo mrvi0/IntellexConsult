@@ -2,7 +2,7 @@
 /**
  * Шаблон для отображения отдельных постов
  * 
- * @package Bankruptcy_Law_Pro
+ * @package intellex-consult
  */
 
 get_header(); ?>
@@ -49,7 +49,7 @@ get_header(); ?>
                         
                         <?php
                         wp_link_pages(array(
-                            'before' => '<div class="page-links">' . esc_html__('Страницы:', 'bankruptcy-law-pro'),
+                            'before' => '<div class="page-links">' . esc_html__('Страницы:', 'intellex-consult'),
                             'after'  => '</div>',
                         ));
                         ?>

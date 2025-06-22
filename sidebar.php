@@ -2,7 +2,7 @@
 /**
  * Боковая панель
  * 
- * @package Bankruptcy_Law_Pro
+ * @package intellex-consult
  */
 
 if (!is_active_sidebar('sidebar-1')) {

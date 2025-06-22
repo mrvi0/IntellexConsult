@@ -2,7 +2,7 @@
 /**
  * Шаблон футера
  * 
- * @package Bankruptcy_Law_Pro
+ * @package intellex-consult
  */
 ?>
 

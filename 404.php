@@ -2,7 +2,7 @@
 /**
  * Шаблон для отображения страницы 404
  * 
- * @package Bankruptcy_Law_Pro
+ * @package intellex-consult
  */
 
 get_header(); ?>

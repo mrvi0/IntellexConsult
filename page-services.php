@@ -7,12 +7,6 @@
 
 get_header(); ?>
 
-<!-- Тестовый контент -->
-<div style="background: red; color: white; padding: 20px; text-align: center;">
-    <h1>ТЕСТ - СТРАНИЦА УСЛУГИ РАБОТАЕТ!</h1>
-    <p>Если вы видите этот красный блок, значит шаблон загружается правильно.</p>
-</div>
-
 <main id="main" class="site-main">
     <!-- Hero секция -->
     <section class="hero services-hero">
