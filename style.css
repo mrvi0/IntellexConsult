@@ -6,7 +6,7 @@ GitHub Theme URI: mrvi0/IntellexConsult
 Author: Mr Vi
 Author URI: https://t.me/b4dcat
 Description: Современная WordPress тема для юридических компаний, специализирующихся на банкротстве
-Version: 1.4.19
+Version: 1.4.20
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: intellex-consult
@@ -2198,4 +2198,121 @@ textarea.form-control {
     .faq-answer {
         padding: 0 14px 14px 14px;
     }
+}
+
+/* Contact Form Styles */
+.wpcf7-form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--color-bg-primary);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px var(--shadow-light);
+    padding: 32px 24px;
+}
+
+.wpcf7-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    letter-spacing: 0.01em;
+}
+
+.wpcf7-form input[type="text"],
+.wpcf7-form input[type="email"],
+.wpcf7-form input[type="tel"],
+.wpcf7-form input[type="url"],
+.wpcf7-form input[type="number"],
+.wpcf7-form input[type="date"],
+.wpcf7-form select,
+.wpcf7-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--color-accent);
+    border-radius: 10px;
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    margin-bottom: 18px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.wpcf7-form input[type="text"]:focus,
+.wpcf7-form input[type="email"]:focus,
+.wpcf7-form input[type="tel"]:focus,
+.wpcf7-form input[type="url"]:focus,
+.wpcf7-form input[type="number"]:focus,
+.wpcf7-form input[type="date"]:focus,
+.wpcf7-form select:focus,
+.wpcf7-form textarea:focus {
+    border-color: var(--color-primary-dark);
+    box-shadow: 0 0 0 2px var(--color-accent);
+    background: var(--color-bg-primary);
+}
+
+.wpcf7-form input[disabled],
+.wpcf7-form textarea[disabled],
+.wpcf7-form select[disabled] {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-muted);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.wpcf7-form .wpcf7-submit,
+.wpcf7-form input[type="submit"] {
+    display: inline-block;
+    background: var(--gradient-primary);
+    color: var(--color-text-light);
+    border: none;
+    border-radius: 25px;
+    padding: 14px 36px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    margin-top: 10px;
+}
+
+.wpcf7-form .wpcf7-submit:hover,
+.wpcf7-form input[type="submit"]:hover {
+    background: var(--gradient-reverse);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 24px var(--shadow-medium);
+}
+
+.wpcf7-form .wpcf7-not-valid,
+.wpcf7-form input.wpcf7-not-valid,
+.wpcf7-form textarea.wpcf7-not-valid,
+.wpcf7-form select.wpcf7-not-valid {
+    border-color: var(--color-error-dark);
+    background: var(--color-error-light);
+}
+
+.wpcf7-form .wpcf7-response-output {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    background: var(--color-error-light);
+    color: var(--color-error-dark);
+    border: 1.5px solid var(--color-error-border);
+    text-align: center;
+    animation: fadeInUp 0.5s;
+}
+
+.wpcf7-form .wpcf7-mail-sent-ok {
+    background: var(--color-bg-tertiary);
+    color: var(--color-primary-dark);
+    border-color: var(--color-accent);
+}
+
+.wpcf7-form .wpcf7-spinner {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
 }
