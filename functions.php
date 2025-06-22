@@ -93,7 +93,8 @@ function bankruptcy_law_pro_scripts() {
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');
     
     // Основные скрипты
-    wp_enqueue_script('bankruptcy-law-pro-main-script', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.1.0', true);
+    $theme_version = wp_get_theme()->get('Version');
+    wp_enqueue_script('bankruptcy-law-pro-main-script', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), $theme_version, true);
     
     // Комментарии
     if (is_singular() && comments_open() && get_option('thread_comments')) {
