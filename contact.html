@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - Intellex Consult</title>
+    <meta name="description" content="Свяжитесь с нами для получения бесплатной консультации по банкротству. Наши контакты и адрес офиса.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Хедер -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <span class="logo-text">Intellex</span>
+                        <span class="logo-accent">Consult</span>
+                    </a>
+                </div>
+                
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-contacts">
+                    <a href="tel:+78001234567" class="header-phone">
+                        <i class="fas fa-phone"></i>
+                        +7 (800) 123-45-67
+                    </a>
+                    <a href="#contact" class="btn-primary" data-modal="request">
+                        <i class="fas fa-comments"></i>
+                        Бесплатная консультация
+                    </a>
+                </div>
+                
+                <button class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="contact-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Контакты</h1>
+                <p>Свяжитесь с нами любым удобным способом. Мы готовы помочь решить ваши долговые проблемы.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контактная информация -->
+    <section class="contact-info-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Наши контакты</h2>
+                <p>Выберите удобный способ связи с нашими специалистами</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Телефон</h3>
+                        <p>Звоните нам в любое время</p>
+                        <a href="tel:+78001234567">+7 (800) 123-45-67</a>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Email</h3>
+                        <p>Напишите нам на почту</p>
+                        <a href="mailto:info@intellexconsult.ru">info@intellexconsult.ru</a>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Адрес</h3>
+                        <p>Приходите в наш офис</p>
+                        <span>г. Москва, ул. Примерная, д. 123</span>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Время работы</h3>
+                        <p>Мы работаем для вас</p>
+                        <span>Пн-Пт: 9:00 - 20:00<br>Сб: 10:00 - 18:00</span>
+                    </div>
+                </div>
+
+                <div class="contact-card social-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Социальные сети</h3>
+                        <p>Следите за нашими новостями</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Онлайн чат</h3>
+                        <p>Быстрая консультация</p>
+                        <a href="#contact" data-modal="request">Начать чат</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма обратной связи -->
+    <section class="contact-form-section">
+        <div class="container">
+            <div class="contact-form-wrapper">
+                <div class="form-content">
+                    <h2>Получить бесплатную консультацию</h2>
+                    <p>Оставьте заявку, и наш специалист свяжется с вами в течение 15 минут для бесплатной консультации по вашему вопросу.</p>
+                    
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="form-control" placeholder="Телефон" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Опишите вашу ситуацию" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Отправить заявку
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="form-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Конфиденциальность</h3>
+                        <p>Вся информация, которую вы предоставляете, строго конфиденциальна и не передается третьим лицам.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Быстрый ответ</h3>
+                        <p>Мы свяжемся с вами в течение 15 минут после отправки заявки в рабочее время.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h3>Бесплатная консультация</h3>
+                        <p>Первая консультация абсолютно бесплатна. Мы проанализируем вашу ситуацию и предложим решение.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Карта -->
+    <section class="map-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Как нас найти</h2>
+                <p>Мы находимся в центре Москвы, удобно добираться на любом транспорте</p>
+            </div>
+            
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.371615257803!2d37.6172993!3d55.755826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTXCsDQ1JzIwLjkiTiAzN8KwMzcnMDIuMyJF!5e0!3m2!1sru!2sru!4v1234567890" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Intellex Consult</h3>
+                    <p>Профессиональные услуги по банкротству физических и юридических лиц. Решаем долговые проблемы быстро и законно.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Услуги</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Банкротство физических лиц</a></li>
+                        <li><a href="#">Банкротство юридических лиц</a></li>
+                        <li><a href="#">Реструктуризация долгов</a></li>
+                        <li><a href="#">Защита от коллекторов</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Информация</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">О компании</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                        <li><a href="#">Условия использования</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <div class="footer-contacts">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <p><a href="tel:+78001234567">+7 (800) 123-45-67</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <p><a href="mailto:info@intellexconsult.ru">info@intellexconsult.ru</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <p>г. Москва, ул. Примерная, д. 123</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                        © 2024 Intellex Consult. Все права защищены.
+                    </div>
+                    <div class="footer-bottom-links">
+                        <a href="#">Политика конфиденциальности</a>
+                        <a href="#">Условия использования</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно -->
+    <div id="request-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>Получить бесплатную консультацию</h3>
+            <p>Оставьте заявку, и наш специалист свяжется с вами в течение 15 минут</p>
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Ваше имя" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" class="form-control" placeholder="Телефон" required>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Опишите вашу ситуацию" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
