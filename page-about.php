@@ -1,6 +1,6 @@
 <?php
 /**
- * Шаблон страницы "О нас"
+ * Template Name: Страница О нас
  * 
  * @package intellex-consult
  */
