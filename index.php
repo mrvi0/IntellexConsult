@@ -258,7 +258,7 @@ get_header(); ?>
     </section>
 
     <!-- Отзывы -->
-    <section class="section testimonials">
+    <section class="section testimonials" id="testimonials">
         <div class="container">
             <div class="section-header">
                 <h2><?php echo get_theme_mod('testimonials_title', 'Отзывы клиентов'); ?></h2>
@@ -318,33 +318,62 @@ get_header(); ?>
         <div class="container">
             <div class="section-header">
                 <h2><?php echo get_theme_mod('faq_title', 'Часто задаваемые вопросы'); ?></h2>
-                <p><?php echo get_theme_mod('faq_subtitle', 'Ответы на самые популярные вопросы о банкротстве'); ?></p>
+                <p><?php echo get_theme_mod('faq_subtitle', 'Ответы на самые популярные вопросы о процедуре банкротства'); ?></p>
             </div>
             <div class="faq-grid">
                 <?php
-                // Выводим активные FAQ вопросы
-                for ($i = 1; $i <= 10; $i++) {
-                    $is_active = get_theme_mod("faq_active_{$i}", $i <= 5);
-                    $question = get_theme_mod("faq_question_{$i}", get_default_faq_question($i));
-                    $answer = get_theme_mod("faq_answer_{$i}", get_default_faq_answer($i));
-                    
-                    if ($is_active && !empty($question) && !empty($answer)) :
+                $faq_query = new WP_Query(array(
+                    'post_type' => 'faq',
+                    'posts_per_page' => 6,
+                    'orderby' => 'menu_order',
+                    'order' => 'ASC'
+                ));
+
+                if ($faq_query->have_posts()) :
+                    while ($faq_query->have_posts()) : $faq_query->the_post();
+                ?>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3><?php the_title(); ?></h3>
+                                <div class="faq-toggle"><i class="fas fa-plus"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <?php the_content(); ?>
+                            </div>
+                        </div>
+                <?php
+                    endwhile;
+                    wp_reset_postdata();
+                else :
                 ?>
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3><?php echo esc_html($question); ?></h3>
-                            <span class="faq-toggle">
-                                <i class="fas fa-plus"></i>
-                            </span>
+                            <h3><?php echo get_default_faq_question(1); ?></h3>
+                            <div class="faq-toggle"><i class="fas fa-plus"></i></div>
                         </div>
                         <div class="faq-answer">
-                            <?php echo wp_kses_post($answer); ?>
+                            <p><?php echo get_default_faq_answer(1); ?></p>
                         </div>
                     </div>
-                <?php
-                    endif;
-                }
-                ?>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3><?php echo get_default_faq_question(2); ?></h3>
+                            <div class="faq-toggle"><i class="fas fa-plus"></i></div>
+                        </div>
+                        <div class="faq-answer">
+                            <p><?php echo get_default_faq_answer(2); ?></p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3><?php echo get_default_faq_question(3); ?></h3>
+                            <div class="faq-toggle"><i class="fas fa-plus"></i></div>
+                        </div>
+                        <div class="faq-answer">
+                            <p><?php echo get_default_faq_answer(3); ?></p>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>

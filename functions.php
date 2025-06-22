@@ -674,6 +674,27 @@ function bankruptcy_law_pro_custom_post_types() {
         'menu_icon' => 'dashicons-admin-tools',
         'rewrite' => array('slug' => 'services'),
     ));
+
+    // FAQ
+    register_post_type('faq', array(
+        'labels' => array(
+            'name' => __('FAQ', 'bankruptcy-law-pro'),
+            'singular_name' => __('Вопрос', 'bankruptcy-law-pro'),
+            'add_new' => __('Добавить новый', 'bankruptcy-law-pro'),
+            'add_new_item' => __('Добавить новый вопрос', 'bankruptcy-law-pro'),
+            'edit_item' => __('Редактировать вопрос', 'bankruptcy-law-pro'),
+            'new_item' => __('Новый вопрос', 'bankruptcy-law-pro'),
+            'view_item' => __('Посмотреть вопрос', 'bankruptcy-law-pro'),
+            'search_items' => __('Искать в FAQ', 'bankruptcy-law-pro'),
+            'not_found' => __('Вопросов не найдено', 'bankruptcy-law-pro'),
+            'not_found_in_trash' => __('В корзине вопросов не найдено', 'bankruptcy-law-pro'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-editor-help',
+        'has_archive' => true,
+        'rewrite' => array('slug' => 'faq'),
+        'supports' => array('title', 'editor'),
+    ));
 }
 add_action('init', 'bankruptcy_law_pro_custom_post_types');
 
