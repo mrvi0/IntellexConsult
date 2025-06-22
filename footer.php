@@ -72,7 +72,7 @@
                                 <div class="contact-icon">
                                     <i class="fas fa-map-marker-alt"></i>
                                 </div>
-                                <p><?php echo get_theme_mod('contact_address'); ?></p>
+                                <p><?php echo esc_html(get_theme_mod('contact_address')); ?></p>
                             </div>
                         <?php endif; ?>
                         
@@ -81,7 +81,7 @@
                                 <div class="contact-icon">
                                     <i class="fas fa-phone"></i>
                                 </div>
-                                <p><a href="tel:<?php echo get_theme_mod('contact_phone'); ?>"><?php echo get_theme_mod('contact_phone'); ?></a></p>
+                                <p><a href="tel:<?php echo esc_attr(get_theme_mod('contact_phone')); ?>"><?php echo esc_html(get_theme_mod('contact_phone')); ?></a></p>
                             </div>
                         <?php endif; ?>
                         
@@ -90,7 +90,7 @@
                                 <div class="contact-icon">
                                     <i class="fas fa-envelope"></i>
                                 </div>
-                                <p><a href="mailto:<?php echo get_theme_mod('contact_email'); ?>"><?php echo get_theme_mod('contact_email'); ?></a></p>
+                                <p><a href="mailto:<?php echo esc_attr(get_theme_mod('contact_email')); ?>"><?php echo esc_html(get_theme_mod('contact_email')); ?></a></p>
                             </div>
                         <?php endif; ?>
                         
@@ -99,7 +99,7 @@
                                 <div class="contact-icon">
                                     <i class="fas fa-clock"></i>
                                 </div>
-                                <p><?php echo get_theme_mod('contact_working_hours'); ?></p>
+                                <p><?php echo esc_html(get_theme_mod('contact_working_hours')); ?></p>
                             </div>
                         <?php endif; ?>
                     </div>
