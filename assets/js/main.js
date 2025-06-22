@@ -488,15 +488,15 @@
             
             // Закрываем все остальные элементы
             $('.faq-item').not($faqItem).removeClass('active');
-            $('.faq-item').not($faqItem).find('.faq-answer').css('max-height', '0');
+            $('.faq-item').not($faqItem).find('.faq-answer').slideUp(300);
             
             // Переключаем текущий элемент
             $faqItem.toggleClass('active');
             
             if ($faqItem.hasClass('active')) {
-                $answer.css('max-height', $answer[0].scrollHeight + 'px');
+                $answer.slideDown(300);
             } else {
-                $answer.css('max-height', '0');
+                $answer.slideUp(300);
             }
         });
     }
