@@ -1,0 +1,61 @@
+name: Cleanup Old Releases
+
+on:
+  workflow_dispatch: # Ручной запуск
+  release:
+    types: [published] # Автоматический запуск при создании нового релиза
+
+jobs:
+  cleanup-releases:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cleanup old releases
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: releases } = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100
+            });
+            
+            // Сортируем релизы по дате создания (новые сначала)
+            const sortedReleases = releases
+              .filter(release => !release.draft && !release.prerelease)
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            
+            // Оставляем только 5 последних релизов
+            const releasesToDelete = sortedReleases.slice(5);
+            
+            console.log(`Found ${releases.length} total releases`);
+            console.log(`Keeping 5 latest releases: ${sortedReleases.slice(0, 5).map(r => r.tag_name).join(', ')}`);
+            console.log(`Deleting ${releasesToDelete.length} old releases`);
+            
+            for (const release of releasesToDelete) {
+              console.log(`Deleting release: ${release.tag_name}`);
+              
+              // Удаляем релиз
+              await github.rest.repos.deleteRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: release.id
+              });
+              
+              // Удаляем тег
+              try {
+                await github.rest.git.deleteRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: `tags/${release.tag_name}`
+                });
+                console.log(`Deleted tag: ${release.tag_name}`);
+              } catch (error) {
+                console.log(`Could not delete tag ${release.tag_name}: ${error.message}`);
+              }
+            }
+            
+            console.log('Cleanup completed!'); 
