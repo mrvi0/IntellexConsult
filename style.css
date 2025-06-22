@@ -755,16 +755,17 @@ body {
 }
 
 .contact-icon {
-    width: 50px;
-    height: 50px;
-    background: #000000;
-    color: #ffffff;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
+    margin: 0 auto 20px;
+    font-size: 2rem;
+    color: #ffffff;
+    transition: all 0.3s ease;
 }
 
 .contact-text h4 {
@@ -898,13 +899,13 @@ textarea.form-control {
     color: #ffffff;
 }
 
-.social-links {
+.footer .social-links {
     display: flex;
     gap: 15px;
     margin-top: 20px;
 }
 
-.social-link {
+.footer .social-link {
     width: 40px;
     height: 40px;
     background: #333333;
@@ -917,9 +918,10 @@ textarea.form-control {
     transition: all 0.3s ease;
 }
 
-.social-link:hover {
+.footer .social-link:hover {
     transform: translateY(-3px);
-    color: #0056b3;
+    color: #ffffff;
+    background: #666666;
 }
 
 /* Модальное окно */
@@ -1226,7 +1228,7 @@ textarea.form-control {
 .contact-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1239,29 +1241,29 @@ textarea.form-control {
 
 .contact-card:hover .contact-icon {
     transform: scale(1.1) rotate(5deg);
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    background: linear-gradient(135deg, #666666 0%, #333333 100%);
 }
 
 .contact-content h3 {
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 15px;
-    color: #2c3e50;
+    color: #000000;
 }
 
 .contact-content p {
-    color: #7f8c8d;
+    color: #666666;
     line-height: 1.6;
 }
 
 .contact-content a {
-    color: #3498db;
+    color: #000000;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .contact-content a:hover {
-    color: #e74c3c;
+    color: #666666;
 }
 
 .social-card .social-links {
@@ -1279,13 +1281,13 @@ textarea.form-control {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #7f8c8d;
+    color: #666666;
     font-size: 1.2rem;
     transition: all 0.3s ease;
 }
 
 .social-link:hover {
-    background: #3498db;
+    background: #000000;
     color: #ffffff;
     transform: translateY(-3px);
 }
@@ -1306,12 +1308,12 @@ textarea.form-control {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 15px;
-    color: #2c3e50;
+    color: #000000;
 }
 
 .form-content p {
     font-size: 1.1rem;
-    color: #7f8c8d;
+    color: #666666;
     margin-bottom: 30px;
 }
 
@@ -1325,7 +1327,7 @@ textarea.form-control {
     background: #f8f9fa;
     padding: 30px;
     border-radius: 15px;
-    border-left: 4px solid #3498db;
+    border-left: 4px solid #000000;
     transition: all 0.3s ease;
 }
 
@@ -1338,7 +1340,7 @@ textarea.form-control {
 .info-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1352,11 +1354,11 @@ textarea.form-control {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 10px;
-    color: #2c3e50;
+    color: #000000;
 }
 
 .info-card p {
-    color: #7f8c8d;
+    color: #666666;
     line-height: 1.6;
 }
 
