@@ -523,86 +523,23 @@ function bankruptcy_law_pro_customize_register($wp_customize) {
         'type' => 'text',
     ));
 
-    // Секция "Социальные сети"
-    $wp_customize->add_section('social_settings', array(
-        'title' => __('Социальные сети', 'bankruptcy-law-pro'),
-        'priority' => 45,
-    ));
-    
-    // VK
-    $wp_customize->add_setting('social_vk', array(
+    // Шорткод контактной формы
+    $wp_customize->add_setting('contact_form_shortcode', array(
         'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
+        'sanitize_callback' => 'sanitize_text_field',
     ));
     
-    $wp_customize->add_control('social_vk', array(
-        'label' => __('VK', 'bankruptcy-law-pro'),
-        'section' => 'social_settings',
-        'type' => 'url',
-    ));
-    
-    // Telegram
-    $wp_customize->add_setting('social_telegram', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('social_telegram', array(
-        'label' => __('Telegram', 'bankruptcy-law-pro'),
-        'section' => 'social_settings',
-        'type' => 'url',
-    ));
-    
-    // WhatsApp
-    $wp_customize->add_setting('social_whatsapp', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('social_whatsapp', array(
-        'label' => __('WhatsApp', 'bankruptcy-law-pro'),
-        'section' => 'social_settings',
-        'type' => 'url',
+    $wp_customize->add_control('contact_form_shortcode', array(
+        'label' => __('Шорткод контактной формы', 'bankruptcy-law-pro'),
+        'section' => 'contact_settings',
+        'description' => __('Вставьте сюда шорткод, например [contact-form-7 id="123" title="Контактная форма"]', 'bankruptcy-law-pro'),
+        'type' => 'text',
     ));
 
     // Секция "Футер"
     $wp_customize->add_section('footer_settings', array(
         'title' => __('Футер', 'bankruptcy-law-pro'),
         'priority' => 50,
-    ));
-
-    // Социальные сети в футере
-    $wp_customize->add_setting('footer_social_vk', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('footer_social_vk', array(
-        'label' => __('VK', 'bankruptcy-law-pro'),
-        'section' => 'footer_settings',
-        'type' => 'url',
-    ));
-    
-    $wp_customize->add_setting('footer_social_telegram', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('footer_social_telegram', array(
-        'label' => __('Telegram', 'bankruptcy-law-pro'),
-        'section' => 'footer_settings',
-        'type' => 'url',
-    ));
-    
-    $wp_customize->add_setting('footer_social_whatsapp', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('footer_social_whatsapp', array(
-        'label' => __('WhatsApp', 'bankruptcy-law-pro'),
-        'section' => 'footer_settings',
-        'type' => 'url',
     ));
 
     // Ссылка на Политику конфиденциальности
