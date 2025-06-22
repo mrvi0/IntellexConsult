@@ -102,30 +102,45 @@
         const $modalClose = $('.modal-close');
 
         // Проверяем существование элементов
-        if (!$modal.length) return;
+        if (!$modal.length) {
+            console.log('Modal element not found, skipping modal initialization');
+            return;
+        }
 
-        $modalTriggers.on('click', function(e) {
-            e.preventDefault();
-            $modal.addClass('show');
-            $('body').addClass('modal-open');
-        });
+        // Проверяем существование триггеров
+        if ($modalTriggers.length) {
+            $modalTriggers.on('click', function(e) {
+                e.preventDefault();
+                if ($modal.length) {
+                    $modal.addClass('show');
+                    $('body').addClass('modal-open');
+                }
+            });
+        }
 
-        $modalClose.on('click', function() {
-            $modal.removeClass('show');
-            $('body').removeClass('modal-open');
-        });
+        // Проверяем существование кнопки закрытия
+        if ($modalClose.length) {
+            $modalClose.on('click', function() {
+                if ($modal.length) {
+                    $modal.removeClass('show');
+                    $('body').removeClass('modal-open');
+                }
+            });
+        }
 
         // Закрыть по клику вне модального окна
-        $modal.on('click', function(e) {
-            if (e.target === this) {
-                $modal.removeClass('show');
-                $('body').removeClass('modal-open');
-            }
-        });
+        if ($modal.length) {
+            $modal.on('click', function(e) {
+                if (e.target === this) {
+                    $modal.removeClass('show');
+                    $('body').removeClass('modal-open');
+                }
+            });
+        }
 
         // Закрыть по Escape
         $(document).on('keydown', function(e) {
-            if (e.key === 'Escape' && $modal.hasClass('show')) {
+            if (e.key === 'Escape' && $modal.length && $modal.hasClass('show')) {
                 $modal.removeClass('show');
                 $('body').removeClass('modal-open');
             }
@@ -467,14 +482,25 @@
      * FAQ аккордеон
      */
     function initFAQ() {
-        $('.faq-question').on('click', function() {
+        const $faqQuestions = $('.faq-question');
+        
+        // Проверяем существование элементов FAQ
+        if (!$faqQuestions.length) {
+            console.log('FAQ elements not found, skipping FAQ initialization');
+            return;
+        }
+
+        $faqQuestions.on('click', function() {
             const $faqItem = $(this).closest('.faq-item');
             
-            // Закрываем все остальные элементы
-            $('.faq-item').not($faqItem).removeClass('active');
-            
-            // Переключаем текущий элемент
-            $faqItem.toggleClass('active');
+            // Проверяем существование родительского элемента
+            if ($faqItem.length) {
+                // Закрываем все остальные элементы
+                $('.faq-item').not($faqItem).removeClass('active');
+                
+                // Переключаем текущий элемент
+                $faqItem.toggleClass('active');
+            }
         });
     }
 
@@ -528,8 +554,27 @@
     function animateCounters() {
         const counters = document.querySelectorAll('.stat-number');
         
+        // Проверяем существование счетчиков
+        if (!counters.length) {
+            console.log('Counter elements not found, skipping counter animation');
+            return;
+        }
+        
         counters.forEach(counter => {
+            // Проверяем наличие атрибута data-count
+            if (!counter.hasAttribute('data-count')) {
+                console.log('Counter missing data-count attribute, skipping');
+                return;
+            }
+            
             const target = parseInt(counter.getAttribute('data-count'));
+            
+            // Проверяем валидность числа
+            if (isNaN(target) || target <= 0) {
+                console.log('Invalid counter target value:', target);
+                return;
+            }
+            
             const duration = 2000; // 2 секунды
             const step = target / (duration / 16); // 60 FPS
             let current = 0;
